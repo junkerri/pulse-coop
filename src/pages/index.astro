@@ -1,11 +1,15 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import RubiksCube from '../components/RubiksCube.astro';
+import PulseWaves from '../components/PulseWaves.astro';
 ---
 
 <MainLayout title="Pulse COOP | Worker-Owned Tech Cooperative">
 	<!-- Hero Section -->
 	<section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 via-blue-50 to-green-50 relative overflow-hidden">
+		<!-- Pulse waves -->
+		<PulseWaves variant="hero" intensity="medium" />
+		
 		<!-- Colorful background elements -->
 		<div class="absolute inset-0">
 			<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-red-200/30 to-orange-200/30 rounded-full blur-3xl animate-pulse" style="animation-duration: 8s;"></div>
@@ -16,17 +20,17 @@ import RubiksCube from '../components/RubiksCube.astro';
 		<div class="max-w-7xl mx-auto px-6 relative z-10">
 			<div class="grid lg:grid-cols-2 gap-12 items-center">
 				<!-- Content Column -->
-				<div class="text-center lg:text-left">
-					<div class="mb-8">
-						<!-- Minimal pulse indicator -->
-						<div class="inline-block relative">
-							<div class="w-2 h-2 bg-emerald-500 rounded-full mb-4 animate-pulse"></div>
+								<div class="text-center lg:text-left">
+					<div class="relative">
+						<!-- Pulse indicator positioned above P -->
+						<div class="absolute -top-6 left-3 lg:left-2">
+							<div class="w-4 h-4 bg-emerald-500 rounded-full animate-pulse shadow-lg"></div>
 						</div>
+
+						<h1 class="text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-red-600 via-blue-600 to-green-600 bg-clip-text text-transparent mb-6 tracking-tight leading-tight">
+							Pulse COOP
+						</h1>
 					</div>
-					
-					<h1 class="text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-red-600 via-blue-600 to-green-600 bg-clip-text text-transparent mb-6 tracking-tight leading-tight">
-						Pulse COOP
-					</h1>
 					
 					<!-- Colorful accent line -->
 					<div class="w-32 h-1 bg-gradient-to-r from-red-400 via-yellow-400 to-green-400 lg:mx-0 mx-auto mb-8 rounded-full"></div>
@@ -65,6 +69,9 @@ import RubiksCube from '../components/RubiksCube.astro';
 
 	<!-- About Section -->
 	<section id="about" class="min-h-screen flex items-center py-24 bg-white relative">
+		<!-- Pulse waves -->
+		<PulseWaves variant="section" intensity="subtle" />
+		
 		<!-- Subtle geometric background -->
 		<div class="absolute inset-0 opacity-5">
 			<div class="absolute top-20 left-20 w-32 h-32 border border-emerald-300 rotate-45"></div>
@@ -158,6 +165,9 @@ import RubiksCube from '../components/RubiksCube.astro';
 
 	<!-- Contact Section -->
 	<section id="contact" class="min-h-screen flex items-center py-24 bg-slate-50 relative overflow-hidden">
+		<!-- Pulse waves -->
+		<PulseWaves variant="contact" intensity="medium" />
+		
 		<!-- Minimal geometric background -->
 		<div class="absolute inset-0 opacity-5">
 			<div class="absolute top-1/4 right-1/4 w-64 h-64 border border-emerald-300 rounded-full"></div>
