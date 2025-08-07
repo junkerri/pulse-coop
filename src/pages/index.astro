@@ -1,16 +1,202 @@
 ---
-
+import MainLayout from '../layouts/MainLayout.astro';
+import RubiksCube from '../components/RubiksCube.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout title="Pulse COOP | Worker-Owned Tech Cooperative">
+	<!-- Hero Section -->
+	<section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 via-blue-50 to-green-50 relative overflow-hidden">
+		<!-- Colorful background elements -->
+		<div class="absolute inset-0">
+			<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-red-200/30 to-orange-200/30 rounded-full blur-3xl animate-pulse" style="animation-duration: 8s;"></div>
+			<div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-br from-blue-200/30 to-green-200/30 rounded-full blur-3xl animate-pulse" style="animation-duration: 10s; animation-delay: 2s;"></div>
+			<div class="absolute top-1/2 left-1/2 w-64 h-64 bg-gradient-to-br from-yellow-200/20 to-orange-200/20 rounded-full blur-3xl animate-pulse" style="animation-duration: 12s; animation-delay: 4s;"></div>
+		</div>
+		
+		<div class="max-w-7xl mx-auto px-6 relative z-10">
+			<div class="grid lg:grid-cols-2 gap-12 items-center">
+				<!-- Content Column -->
+				<div class="text-center lg:text-left">
+					<div class="mb-8">
+						<!-- Minimal pulse indicator -->
+						<div class="inline-block relative">
+							<div class="w-2 h-2 bg-emerald-500 rounded-full mb-4 animate-pulse"></div>
+						</div>
+					</div>
+					
+					<h1 class="text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-red-600 via-blue-600 to-green-600 bg-clip-text text-transparent mb-6 tracking-tight leading-tight">
+						Pulse COOP
+					</h1>
+					
+					<!-- Colorful accent line -->
+					<div class="w-32 h-1 bg-gradient-to-r from-red-400 via-yellow-400 to-green-400 lg:mx-0 mx-auto mb-8 rounded-full"></div>
+					
+					<p class="text-xl md:text-2xl text-slate-600 leading-relaxed mb-12 max-w-2xl lg:mx-0 mx-auto">
+						A worker-owned tech cooperative founded by 
+						<span class="text-red-600 font-semibold bg-red-50 px-2 py-1 rounded-lg">Aastha</span>, 
+						<span class="text-blue-600 font-semibold bg-blue-50 px-2 py-1 rounded-lg">Riley</span>, and 
+						<span class="text-green-600 font-semibold bg-green-50 px-2 py-1 rounded-lg">Andrew</span>
+					</p>
+					
+					<div class="group">
+						<a href="#about" class="inline-flex items-center px-10 py-4 bg-gradient-to-r from-blue-600 to-green-600 text-white font-medium rounded-full hover:from-red-500 hover:to-orange-500 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl">
+							<span class="mr-3">Learn More</span>
+							<svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+							</svg>
+						</a>
+					</div>
+				</div>
+				
+				<!-- Rubik's Cube Column -->
+				<div class="flex justify-center lg:justify-end">
+					<div class="relative">
+						<!-- Floating animation wrapper -->
+						<div class="animate-float">
+							<RubiksCube />
+						</div>
+						<!-- Subtle glow effect -->
+						<div class="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-slate-400/20 rounded-full blur-3xl -z-10"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- About Section -->
+	<section id="about" class="min-h-screen flex items-center py-24 bg-white relative">
+		<!-- Subtle geometric background -->
+		<div class="absolute inset-0 opacity-5">
+			<div class="absolute top-20 left-20 w-32 h-32 border border-emerald-300 rotate-45"></div>
+			<div class="absolute bottom-32 right-32 w-24 h-24 border border-slate-300 rotate-12"></div>
+		</div>
+		
+		<div class="max-w-6xl mx-auto px-6 relative z-10">
+			<div class="text-center mb-20">
+				<h2 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-orange-600 via-red-600 to-blue-600 bg-clip-text text-transparent mb-8 tracking-tight">
+					About
+				</h2>
+				<div class="w-24 h-1 bg-gradient-to-r from-orange-400 via-red-400 to-blue-400 mx-auto mb-12 rounded-full"></div>
+				<p class="text-xl text-slate-700 max-w-4xl mx-auto leading-relaxed">
+					<span class="text-emerald-700 font-semibold">Pulse COOP</span> is a worker-owned cooperative made up of creatives, musicians, and web technologists based in Austin. We believe in supporting local and small businesses, building tools for our community, and using technology to empower small organizations and grassroots movements.
+				</p>
+			</div>
+			
+			<div class="grid md:grid-cols-2 gap-12 items-start">
+				<div class="group relative">
+					<div class="absolute inset-0 bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+					<div class="relative bg-white/90 backdrop-blur-sm p-10 rounded-3xl border border-green-200/50 hover:border-blue-300/50 transition-all duration-500">
+						<h3 class="text-2xl font-bold text-slate-900 mb-8">Our Values</h3>
+						<ul class="space-y-6">
+							<li class="group/item flex items-start">
+								<div class="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-3 mr-4 flex-shrink-0 group-hover/item:scale-150 transition-transform duration-300"></div>
+								<div>
+									<strong class="text-slate-900 text-lg">Worker Ownership</strong>
+									<p class="text-slate-600 mt-1">Democratic decision-making and shared success</p>
+								</div>
+							</li>
+							<li class="group/item flex items-start">
+								<div class="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-3 mr-4 flex-shrink-0 group-hover/item:scale-150 transition-transform duration-300"></div>
+								<div>
+									<strong class="text-slate-900 text-lg">Tech-Enabled Collaboration</strong>
+									<p class="text-slate-600 mt-1">Building tools that bring communities together</p>
+								</div>
+							</li>
+							<li class="group/item flex items-start">
+								<div class="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-3 mr-4 flex-shrink-0 group-hover/item:scale-150 transition-transform duration-300"></div>
+								<div>
+									<strong class="text-slate-900 text-lg">Local & Small Business Support</strong>
+									<p class="text-slate-600 mt-1">Strengthening our community's economic foundation</p>
+								</div>
+							</li>
+							<li class="group/item flex items-start">
+								<div class="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-3 mr-4 flex-shrink-0 group-hover/item:scale-150 transition-transform duration-300"></div>
+								<div>
+									<strong class="text-slate-900 text-lg">Community Empowerment</strong>
+									<p class="text-slate-600 mt-1">Technology that serves grassroots movements</p>
+								</div>
+							</li>
+							<li class="group/item flex items-start">
+								<div class="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-3 mr-4 flex-shrink-0 group-hover/item:scale-150 transition-transform duration-300"></div>
+								<div>
+									<strong class="text-slate-900 text-lg">Sustainability & Ethics</strong>
+									<p class="text-slate-600 mt-1">Responsible practices for long-term impact</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="group relative">
+					<div class="absolute inset-0 bg-gradient-to-br from-red-400/20 to-orange-400/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+					<div class="relative bg-white/90 backdrop-blur-sm p-10 rounded-3xl border border-red-200/50 hover:border-orange-300/50 transition-all duration-500">
+						<h3 class="text-2xl font-bold text-slate-900 mb-8">Our Team</h3>
+						<div class="space-y-6">
+							<div class="group/item p-4 rounded-xl hover:bg-red-50/70 transition-all duration-300">
+								<h4 class="font-semibold text-slate-900 text-lg mb-1">Aastha Kumari Karki</h4>
+								<div class="w-8 h-px bg-gradient-to-r from-red-500 to-transparent group-hover/item:w-12 transition-all duration-300"></div>
+							</div>
+							<div class="group/item p-4 rounded-xl hover:bg-blue-50/70 transition-all duration-300">
+								<h4 class="font-semibold text-slate-900 text-lg mb-1">Andrew Riefenstahl</h4>
+								<div class="w-8 h-px bg-gradient-to-r from-blue-500 to-transparent group-hover/item:w-12 transition-all duration-300"></div>
+							</div>
+							<div class="group/item p-4 rounded-xl hover:bg-green-50/70 transition-all duration-300">
+								<h4 class="font-semibold text-slate-900 text-lg mb-1">Riley Sklar</h4>
+								<div class="w-8 h-px bg-gradient-to-r from-green-500 to-transparent group-hover/item:w-12 transition-all duration-300"></div>
+							</div>
+						</div>
+						<div class="mt-8 p-6 bg-slate-50/50 rounded-2xl border border-slate-200/50">
+							<p class="text-slate-600 leading-relaxed italic">
+								"We are musicians and collaborators deeply connected to Austin's creative and tech scenes. Full bios coming soon."
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Contact Section -->
+	<section id="contact" class="min-h-screen flex items-center py-24 bg-slate-50 relative overflow-hidden">
+		<!-- Minimal geometric background -->
+		<div class="absolute inset-0 opacity-5">
+			<div class="absolute top-1/4 right-1/4 w-64 h-64 border border-emerald-300 rounded-full"></div>
+			<div class="absolute bottom-1/4 left-1/4 w-48 h-48 border border-slate-300 rounded-full"></div>
+		</div>
+		
+		<div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+			<div class="mb-12">
+				<h2 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-600 via-orange-600 to-red-600 bg-clip-text text-transparent mb-6 tracking-tight">
+					Let's Work Together
+				</h2>
+				<div class="w-32 h-1 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 mx-auto rounded-full"></div>
+			</div>
+			
+			<p class="text-xl text-slate-600 mb-16 max-w-2xl mx-auto leading-relaxed">
+				Interested in collaborating or learning more about worker-owned cooperatives? 
+				We'd love to hear from you.
+			</p>
+			
+			<div class="group relative max-w-md mx-auto">
+				<div class="absolute inset-0 bg-gradient-to-br from-yellow-400/30 to-orange-400/30 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+				<div class="relative bg-white/90 backdrop-blur-sm p-10 rounded-3xl border border-yellow-200/50 hover:border-orange-300/50 transition-all duration-500">
+					<div class="flex items-center justify-center mb-8">
+						<div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+							<svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+							</svg>
+						</div>
+					</div>
+					
+					<h3 class="text-2xl font-bold text-slate-900 mb-8">Get in Touch</h3>
+					<a href="mailto:hello@pulse.coop" class="text-xl text-orange-700 font-semibold hover:text-red-800 transition-colors duration-300 group-hover:underline decoration-2 decoration-orange-500 underline-offset-4">
+						hello@pulse.coop
+					</a>
+					<p class="text-slate-500 mt-8 text-sm leading-relaxed">
+						We'll get back to you as soon as possible
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+</MainLayout>
