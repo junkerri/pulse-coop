@@ -1,0 +1,253 @@
+---
+// Pulse Waves Component - Animated waves that flow across sections
+export interface Props {
+  variant?: 'hero' | 'section' | 'contact';
+  intensity?: 'subtle' | 'medium' | 'strong';
+}
+
+const { variant = 'section', intensity = 'medium' } = Astro.props;
+---
+
+<div class={`pulse-waves pulse-waves--${variant} pulse-waves--${intensity}`}>
+  <!-- Seamless infinite flowing waves -->
+  <div class="flowing-wave">
+    <!-- Primary wave layer -->
+    <div class="wave-container">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,60 C360,30 720,90 1080,60 C1200,50 1320,70 1440,60 L1440,0 L0,0 Z" class="wave-path" />
+      </svg>
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,60 C360,30 720,90 1080,60 C1200,50 1320,70 1440,60 L1440,0 L0,0 Z" class="wave-path" />
+      </svg>
+    </div>
+    
+    <!-- Secondary wave layer -->
+    <div class="wave-container wave-layer-2">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,80 C240,50 480,110 720,80 C960,50 1200,110 1440,80 L1440,0 L0,0 Z" class="wave-path" />
+      </svg>
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,80 C240,50 480,110 720,80 C960,50 1200,110 1440,80 L1440,0 L0,0 Z" class="wave-path" />
+      </svg>
+    </div>
+  </div>
+</div>
+
+<style>
+  .pulse-waves {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  /* Seamless infinite flowing wave */
+  .flowing-wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .wave-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    animation: wave-seamless 30s linear infinite;
+  }
+  
+  .wave-container svg {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+  }
+  
+  .wave-container svg:first-child {
+    left: 0;
+  }
+  
+  .wave-container svg:last-child {
+    left: 50%;
+  }
+  
+  .wave-path {
+    fill: rgba(96, 165, 250, 0.15);
+    animation: wave-pulse 8s ease-in-out infinite;
+  }
+  
+  .wave-container.wave-layer-2 {
+    animation-duration: 25s;
+    animation-direction: reverse;
+  }
+  
+  .wave-container.wave-layer-2 .wave-path {
+    fill: rgba(96, 165, 250, 0.08);
+    animation: wave-pulse 12s ease-in-out infinite 3s;
+  }
+  
+  /* Seamless wave animation - moves exactly one wave length */
+  @keyframes wave-seamless {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  /* Wave pulsing animation */
+  @keyframes wave-pulse {
+    0%, 100% {
+      fill-opacity: 0.6;
+      transform: scaleY(1);
+    }
+    25% {
+      fill-opacity: 0.8;
+      transform: scaleY(1.02);
+    }
+    50% {
+      fill-opacity: 1;
+      transform: scaleY(1.05);
+    }
+    75% {
+      fill-opacity: 0.8;
+      transform: scaleY(1.02);
+    }
+  }
+  
+  /* Variant styles */
+  .pulse-waves--hero .wave-container {
+    animation-duration: 20s;
+  }
+  
+  .pulse-waves--hero .wave-container.wave-layer-2 {
+    animation-duration: 15s;
+  }
+  
+  .pulse-waves--hero .wave-path {
+    fill: rgba(96, 165, 250, 0.25);
+  }
+  
+  .pulse-waves--hero .wave-container.wave-layer-2 .wave-path {
+    fill: rgba(96, 165, 250, 0.15);
+  }
+  
+  .pulse-waves--section .wave-container {
+    animation-duration: 35s;
+  }
+  
+  .pulse-waves--section .wave-container.wave-layer-2 {
+    animation-duration: 40s;
+  }
+  
+  .pulse-waves--section .wave-path {
+    fill: rgba(96, 165, 250, 0.18);
+  }
+  
+  .pulse-waves--section .wave-container.wave-layer-2 .wave-path {
+    fill: rgba(96, 165, 250, 0.1);
+  }
+  
+  .pulse-waves--contact .wave-container {
+    animation-duration: 45s;
+  }
+  
+  .pulse-waves--contact .wave-container.wave-layer-2 {
+    animation-duration: 50s;
+  }
+  
+  .pulse-waves--contact .wave-path {
+    fill: rgba(96, 165, 250, 0.12);
+  }
+  
+  .pulse-waves--contact .wave-container.wave-layer-2 .wave-path {
+    fill: rgba(96, 165, 250, 0.06);
+  }
+  
+  /* Intensity variants */
+  .pulse-waves--subtle .wave-path {
+    fill: rgba(96, 165, 250, 0.08);
+  }
+  
+  .pulse-waves--subtle .wave-container.wave-layer-2 .wave-path {
+    fill: rgba(96, 165, 250, 0.04);
+  }
+  
+  .pulse-waves--medium .wave-path {
+    fill: rgba(96, 165, 250, 0.15);
+  }
+  
+  .pulse-waves--medium .wave-container.wave-layer-2 .wave-path {
+    fill: rgba(96, 165, 250, 0.08);
+  }
+  
+  .pulse-waves--strong .wave-container {
+    animation-duration: 15s;
+  }
+  
+  .pulse-waves--strong .wave-container.wave-layer-2 {
+    animation-duration: 12s;
+  }
+  
+  .pulse-waves--strong .wave-path {
+    fill: rgba(96, 165, 250, 0.3);
+  }
+  
+  .pulse-waves--strong .wave-container.wave-layer-2 .wave-path {
+    fill: rgba(96, 165, 250, 0.18);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .wave-container {
+      animation-duration: 40s;
+    }
+    
+    .wave-container.wave-layer-2 {
+      animation-duration: 35s;
+    }
+    
+    .pulse-waves--hero .wave-container {
+      animation-duration: 30s;
+    }
+    
+    .pulse-waves--hero .wave-container.wave-layer-2 {
+      animation-duration: 25s;
+    }
+    
+    .pulse-waves--section .wave-container {
+      animation-duration: 50s;
+    }
+    
+    .pulse-waves--section .wave-container.wave-layer-2 {
+      animation-duration: 55s;
+    }
+    
+    .pulse-waves--contact .wave-container {
+      animation-duration: 60s;
+    }
+    
+    .pulse-waves--contact .wave-container.wave-layer-2 {
+      animation-duration: 65s;
+    }
+  }
+  
+  /* Reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .wave-container {
+      animation-duration: 120s;
+    }
+    
+    .wave-path {
+      animation: none;
+    }
+  }
+</style>
