@@ -9,16 +9,25 @@ const { variant = 'section', intensity = 'medium' } = Astro.props;
 ---
 
 <div class={`pulse-waves pulse-waves--${variant} pulse-waves--${intensity}`}>
-  <!-- Seamless infinite flowing wave -->
+  <!-- Seamless infinite flowing waves -->
   <div class="flowing-wave">
+    <!-- Primary wave layer -->
     <div class="wave-container">
-      <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M0,60 C150,30 300,90 450,60 C600,30 750,90 900,60 C1050,30 1200,90 1200,60 L1200,0 L0,0 Z" />
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,60 C360,30 720,90 1080,60 C1200,50 1320,70 1440,60 L1440,0 L0,0 Z" class="wave-path" />
+      </svg>
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,60 C360,30 720,90 1080,60 C1200,50 1320,70 1440,60 L1440,0 L0,0 Z" class="wave-path" />
       </svg>
     </div>
+    
+    <!-- Secondary wave layer -->
     <div class="wave-container wave-layer-2">
-      <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M0,80 C200,50 400,110 600,80 C800,50 1000,110 1200,80 L1200,0 L0,0 Z" />
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,80 C240,50 480,110 720,80 C960,50 1200,110 1440,80 L1440,0 L0,0 Z" class="wave-path" />
+      </svg>
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,80 C240,50 480,110 720,80 C960,50 1200,110 1440,80 L1440,0 L0,0 Z" class="wave-path" />
       </svg>
     </div>
   </div>
@@ -49,7 +58,7 @@ const { variant = 'section', intensity = 'medium' } = Astro.props;
     position: absolute;
     top: 0;
     left: 0;
-    width: 300%;
+    width: 200%;
     height: 100%;
     animation: wave-seamless 30s linear infinite;
   }
@@ -57,33 +66,19 @@ const { variant = 'section', intensity = 'medium' } = Astro.props;
   .wave-container svg {
     position: absolute;
     top: 0;
+    width: 50%;
+    height: 100%;
+  }
+  
+  .wave-container svg:first-child {
     left: 0;
-    width: 33.333%;
-    height: 100%;
   }
   
-  /* Create three copies of the wave for seamless looping */
-  .wave-container::before,
-  .wave-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 33.333%;
-    height: 100%;
-    background-image: inherit;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+  .wave-container svg:last-child {
+    left: 50%;
   }
   
-  .wave-container::before {
-    left: 33.333%;
-  }
-  
-  .wave-container::after {
-    left: 66.666%;
-  }
-  
-  .wave-container path {
+  .wave-path {
     fill: rgba(96, 165, 250, 0.15);
     animation: wave-pulse 8s ease-in-out infinite;
   }
@@ -93,7 +88,7 @@ const { variant = 'section', intensity = 'medium' } = Astro.props;
     animation-direction: reverse;
   }
   
-  .wave-container.wave-layer-2 path {
+  .wave-container.wave-layer-2 .wave-path {
     fill: rgba(96, 165, 250, 0.08);
     animation: wave-pulse 12s ease-in-out infinite 3s;
   }
@@ -104,7 +99,7 @@ const { variant = 'section', intensity = 'medium' } = Astro.props;
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-33.333%);
+      transform: translateX(-50%);
     }
   }
   
@@ -137,11 +132,11 @@ const { variant = 'section', intensity = 'medium' } = Astro.props;
     animation-duration: 15s;
   }
   
-  .pulse-waves--hero .wave-container path {
+  .pulse-waves--hero .wave-path {
     fill: rgba(96, 165, 250, 0.25);
   }
   
-  .pulse-waves--hero .wave-container.wave-layer-2 path {
+  .pulse-waves--hero .wave-container.wave-layer-2 .wave-path {
     fill: rgba(96, 165, 250, 0.15);
   }
   
@@ -153,11 +148,11 @@ const { variant = 'section', intensity = 'medium' } = Astro.props;
     animation-duration: 40s;
   }
   
-  .pulse-waves--section .wave-container path {
+  .pulse-waves--section .wave-path {
     fill: rgba(96, 165, 250, 0.18);
   }
   
-  .pulse-waves--section .wave-container.wave-layer-2 path {
+  .pulse-waves--section .wave-container.wave-layer-2 .wave-path {
     fill: rgba(96, 165, 250, 0.1);
   }
   
@@ -169,28 +164,28 @@ const { variant = 'section', intensity = 'medium' } = Astro.props;
     animation-duration: 50s;
   }
   
-  .pulse-waves--contact .wave-container path {
+  .pulse-waves--contact .wave-path {
     fill: rgba(96, 165, 250, 0.12);
   }
   
-  .pulse-waves--contact .wave-container.wave-layer-2 path {
+  .pulse-waves--contact .wave-container.wave-layer-2 .wave-path {
     fill: rgba(96, 165, 250, 0.06);
   }
   
   /* Intensity variants */
-  .pulse-waves--subtle .wave-container path {
+  .pulse-waves--subtle .wave-path {
     fill: rgba(96, 165, 250, 0.08);
   }
   
-  .pulse-waves--subtle .wave-container.wave-layer-2 path {
+  .pulse-waves--subtle .wave-container.wave-layer-2 .wave-path {
     fill: rgba(96, 165, 250, 0.04);
   }
   
-  .pulse-waves--medium .wave-container path {
+  .pulse-waves--medium .wave-path {
     fill: rgba(96, 165, 250, 0.15);
   }
   
-  .pulse-waves--medium .wave-container.wave-layer-2 path {
+  .pulse-waves--medium .wave-container.wave-layer-2 .wave-path {
     fill: rgba(96, 165, 250, 0.08);
   }
   
@@ -202,11 +197,11 @@ const { variant = 'section', intensity = 'medium' } = Astro.props;
     animation-duration: 12s;
   }
   
-  .pulse-waves--strong .wave-container path {
+  .pulse-waves--strong .wave-path {
     fill: rgba(96, 165, 250, 0.3);
   }
   
-  .pulse-waves--strong .wave-container.wave-layer-2 path {
+  .pulse-waves--strong .wave-container.wave-layer-2 .wave-path {
     fill: rgba(96, 165, 250, 0.18);
   }
   
@@ -251,7 +246,7 @@ const { variant = 'section', intensity = 'medium' } = Astro.props;
       animation-duration: 120s;
     }
     
-    .wave-container path {
+    .wave-path {
       animation: none;
     }
   }
