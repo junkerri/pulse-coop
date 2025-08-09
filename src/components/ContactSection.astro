@@ -1,5 +1,6 @@
 ---
 // Contact Section Component
+import ContactForm from './ContactForm.astro';
 ---
 
 <!-- Contact Section -->
@@ -25,7 +26,7 @@
 		
 		<div class="group relative max-w-md mx-auto">
 			<div class="absolute inset-0 bg-gradient-to-br from-yellow-400/30 to-orange-400/30 dark:from-yellow-500/30 dark:to-orange-500/30 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-			<div class="relative bg-card/90 backdrop-blur-sm p-10 rounded-3xl border border-yellow-200/50 dark:border-yellow-700/50 hover:border-orange-300/50 dark:hover:border-orange-600/50 transition-all duration-500">
+			<div class="relative bg-card/90 backdrop-blur-sm p-10 rounded-3xl border border-yellow-200/50 dark:border-yellow-700/50 hover:border-orange-300/50 dark:hover:border-orange-600/50 transition-all duration-500 text-left">
 				<div class="flex items-center justify-center mb-8">
 					<div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 dark:from-orange-400 dark:to-red-400 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
 						<svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -34,13 +35,8 @@
 					</div>
 				</div>
 				
-				<h3 class="text-2xl font-bold text-foreground mb-8">Get in Touch</h3>
-				<a href="mailto:hello@pulse.coop" class="text-xl text-orange-700 dark:text-orange-400 font-semibold hover:text-red-800 dark:hover:text-red-400 transition-colors duration-300 group-hover:underline decoration-2 decoration-orange-500 dark:decoration-orange-400 underline-offset-4">
-					hello@pulse.coop
-				</a>
-				<p class="text-muted-foreground mt-8 text-sm leading-relaxed">
-					We'll get back to you as soon as possible
-				</p>
+				<h3 class="text-2xl font-bold text-foreground mb-6">Get in Touch</h3>
+				<ContactForm />
 			</div>
 		</div>
 	</div>
