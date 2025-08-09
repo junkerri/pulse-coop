@@ -130,3 +130,32 @@ For questions about the website or Pulse COOP:
 ## 📄 License
 
 This project is part of Pulse COOP's open-source initiatives. Built with ❤️ by the Pulse COOP team.
+
+## Formspree Contact Form
+
+This project uses Formspree for contact submissions.
+
+### Environment variables
+
+Provide one of the following (client-exposed) environment variables:
+
+- `PUBLIC_FORMSPREE_FORM_ID` (Astro-friendly, recommended)
+- `NEXT_PUBLIC_FORM` (compatible with Vercel Formspree integration)
+
+Example `.env`:
+
+```
+PUBLIC_FORMSPREE_FORM_ID=your_formspree_form_id
+```
+
+### Where it’s used
+
+- Service: `src/lib/formspree.ts`
+- Form UI: `src/components/ContactForm.astro`
+- Section embedding: `src/components/ContactSection.astro`
+
+### How it works
+
+`ContactForm.astro` posts to Formspree via `submitToFormspree` using `fetch` to `https://formspree.io/f/<FORM_ID>` with `FormData`.
+
+If the env var is missing, the form will display an error on submit.
