@@ -9,15 +9,20 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/react": "^4.3.0",
     "@radix-ui/react-slot": "^1.2.3",
     "@tailwindcss/vite": "^4.1.11",
+    "@types/three": "^0.179.0",
     "astro": "^5.12.8",
     "canvas-confetti": "^1.9.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.537.0",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.11"
+    "tailwindcss": "^4.1.11",
+    "three": "^0.179.1"
   },
   "devDependencies": {
     "tw-animate-css": "^1.3.6"

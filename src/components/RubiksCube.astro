@@ -3,426 +3,426 @@
 ---
 
 <div class="cube-container">
-  <div class="cube" id="rubiksCube">
-    <!-- Front face -->
-    <div class="face front">
-      <div class="square red"></div>
-      <div class="square blue"></div>
-      <div class="square green"></div>
-      <div class="square yellow"></div>
-      <div class="square red"></div>
-      <div class="square orange"></div>
-      <div class="square white"></div>
-      <div class="square green"></div>
-      <div class="square blue"></div>
+    <div class="cube" id="rubiksCube">
+      <!-- Front face -->
+      <div class="face front">
+        <div class="square red"></div>
+        <div class="square blue"></div>
+        <div class="square green"></div>
+        <div class="square yellow"></div>
+        <div class="square red"></div>
+        <div class="square orange"></div>
+        <div class="square white"></div>
+        <div class="square green"></div>
+        <div class="square blue"></div>
+      </div>
+      
+      <!-- Back face -->
+      <div class="face back">
+        <div class="square orange"></div>
+        <div class="square white"></div>
+        <div class="square red"></div>
+        <div class="square blue"></div>
+        <div class="square orange"></div>
+        <div class="square yellow"></div>
+        <div class="square green"></div>
+        <div class="square red"></div>
+        <div class="square white"></div>
+      </div>
+      
+      <!-- Right face -->
+      <div class="face right">
+        <div class="square yellow"></div>
+        <div class="square green"></div>
+        <div class="square white"></div>
+        <div class="square orange"></div>
+        <div class="square blue"></div>
+        <div class="square red"></div>
+        <div class="square white"></div>
+        <div class="square yellow"></div>
+        <div class="square green"></div>
+      </div>
+      
+      <!-- Left face -->
+      <div class="face left">
+        <div class="square blue"></div>
+        <div class="square red"></div>
+        <div class="square orange"></div>
+        <div class="square green"></div>
+        <div class="square white"></div>
+        <div class="square yellow"></div>
+        <div class="square orange"></div>
+        <div class="square blue"></div>
+        <div class="square red"></div>
+      </div>
+      
+      <!-- Top face -->
+      <div class="face top">
+        <div class="square white"></div>
+        <div class="square orange"></div>
+        <div class="square yellow"></div>
+        <div class="square red"></div>
+        <div class="square green"></div>
+        <div class="square blue"></div>
+        <div class="square yellow"></div>
+        <div class="square white"></div>
+        <div class="square orange"></div>
+      </div>
+      
+      <!-- Bottom face -->
+      <div class="face bottom">
+        <div class="square green"></div>
+        <div class="square yellow"></div>
+        <div class="square blue"></div>
+        <div class="square white"></div>
+        <div class="square orange"></div>
+        <div class="square red"></div>
+        <div class="square blue"></div>
+        <div class="square green"></div>
+        <div class="square yellow"></div>
+      </div>
     </div>
     
-    <!-- Back face -->
-    <div class="face back">
-      <div class="square orange"></div>
-      <div class="square white"></div>
-      <div class="square red"></div>
-      <div class="square blue"></div>
-      <div class="square orange"></div>
-      <div class="square yellow"></div>
-      <div class="square green"></div>
-      <div class="square red"></div>
-      <div class="square white"></div>
-    </div>
-    
-    <!-- Right face -->
-    <div class="face right">
-      <div class="square yellow"></div>
-      <div class="square green"></div>
-      <div class="square white"></div>
-      <div class="square orange"></div>
-      <div class="square blue"></div>
-      <div class="square red"></div>
-      <div class="square white"></div>
-      <div class="square yellow"></div>
-      <div class="square green"></div>
-    </div>
-    
-    <!-- Left face -->
-    <div class="face left">
-      <div class="square blue"></div>
-      <div class="square red"></div>
-      <div class="square orange"></div>
-      <div class="square green"></div>
-      <div class="square white"></div>
-      <div class="square yellow"></div>
-      <div class="square orange"></div>
-      <div class="square blue"></div>
-      <div class="square red"></div>
-    </div>
-    
-    <!-- Top face -->
-    <div class="face top">
-      <div class="square white"></div>
-      <div class="square orange"></div>
-      <div class="square yellow"></div>
-      <div class="square red"></div>
-      <div class="square green"></div>
-      <div class="square blue"></div>
-      <div class="square yellow"></div>
-      <div class="square white"></div>
-      <div class="square orange"></div>
-    </div>
-    
-    <!-- Bottom face -->
-    <div class="face bottom">
-      <div class="square green"></div>
-      <div class="square yellow"></div>
-      <div class="square blue"></div>
-      <div class="square white"></div>
-      <div class="square orange"></div>
-      <div class="square red"></div>
-      <div class="square blue"></div>
-      <div class="square green"></div>
-      <div class="square yellow"></div>
+    <!-- Pulsing dot that appears after solving -->
+    <div class="pulse-dot" id="pulseDot">
+      <div class="dot-core"></div>
+      <div class="pulse-ring pulse-1"></div>
+      <div class="pulse-ring pulse-2"></div>
+      <div class="pulse-ring pulse-3"></div>
     </div>
   </div>
   
-  <!-- Pulsing dot that appears after solving -->
-  <div class="pulse-dot" id="pulseDot">
-    <div class="dot-core"></div>
-    <div class="pulse-ring pulse-1"></div>
-    <div class="pulse-ring pulse-2"></div>
-    <div class="pulse-ring pulse-3"></div>
-  </div>
-</div>
-
-<style>
-  .cube-container {
-    perspective: 1200px;
-    perspective-origin: center center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 220px;
-    height: 220px;
-    margin: 0 auto;
-    position: relative;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
-  }
-
-  .cube {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    transform-style: preserve-3d;
-    animation: solvingSequence 15s infinite;
-  }
-
-  .face {
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 3px;
-    padding: 12px;
-    box-sizing: border-box;
-    border-radius: 12px;
-    backface-visibility: hidden;
-  }
-
-  .square {
-    border-radius: 8px;
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center;
-    position: relative;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .square::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 6px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
-    pointer-events: none;
-  }
-
-  .square::after {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    right: 2px;
-    bottom: 2px;
-    border-radius: 4px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, transparent 30%);
-    pointer-events: none;
-  }
-
-  /* Rubik's Cube Colors using original hex values */
-  .red {
-    background: linear-gradient(135deg, #fca5a5, #f87171);
-    animation: colorShift 15s infinite;
-  }
-  
-  .blue {
-    background: linear-gradient(135deg, #93c5fd, #60a5fa);
-    animation: colorShift 15s infinite 0.5s;
-  }
-  
-  .green {
-    background: linear-gradient(135deg, #86efac, #4ade80);
-    animation: colorShift 15s infinite 1s;
-  }
-  
-  .yellow {
-    background: linear-gradient(135deg, #fde047, #facc15);
-    animation: colorShift 15s infinite 1.5s;
-  }
-  
-  .orange {
-    background: linear-gradient(135deg, #fdba74, #fb923c);
-    animation: colorShift 15s infinite 2s;
-  }
-  
-  .white {
-    background: linear-gradient(135deg, #ffffff, #f1f5f9);
-    animation: colorShift 15s infinite 2.5s;
-  }
-
-  /* Face positioning with improved 3D depth */
-  .front { 
-    transform: rotateY(0deg) translateZ(90px); 
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
-    box-shadow: 
-      inset 0 0 20px rgba(255, 255, 255, 0.2),
-      0 5px 15px rgba(0, 0, 0, 0.1);
-  }
-  
-  .back { 
-    transform: rotateY(180deg) translateZ(90px); 
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
-  }
-  
-  .right { 
-    transform: rotateY(90deg) translateZ(90px); 
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.1) 100%);
-    box-shadow: 
-      inset -5px 0 15px rgba(0, 0, 0, 0.1),
-      0 3px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .left { 
-    transform: rotateY(-90deg) translateZ(90px); 
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
-    box-shadow: 
-      inset 5px 0 15px rgba(0, 0, 0, 0.15),
-      0 3px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .top { 
-    transform: rotateX(90deg) translateZ(90px); 
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
-    box-shadow: 
-      inset 0 -5px 15px rgba(0, 0, 0, 0.1),
-      0 -3px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .bottom { 
-    transform: rotateX(-90deg) translateZ(90px); 
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
-    box-shadow: 
-      inset 0 5px 15px rgba(0, 0, 0, 0.2),
-      0 5px 15px rgba(0, 0, 0, 0.15);
-  }
-
-  /* Enhanced solving animation sequence with 3D perspective */
-  @keyframes solvingSequence {
-    0% {
-      transform: rotateX(-15deg) rotateY(15deg) rotateZ(0deg) scale(1);
-      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
-    }
-    15% {
-      transform: rotateX(165deg) rotateY(105deg) rotateZ(45deg) scale(1.05);
-      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.2));
-    }
-    30% {
-      transform: rotateX(75deg) rotateY(195deg) rotateZ(90deg) scale(1);
-      filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.18));
-    }
-    45% {
-      transform: rotateX(255deg) rotateY(285deg) rotateZ(135deg) scale(0.95);
-      filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.15));
-    }
-    60% {
-      transform: rotateX(345deg) rotateY(375deg) rotateZ(180deg) scale(1.02);
-      filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.2));
-    }
-    75% {
-      transform: rotateX(345deg) rotateY(375deg) rotateZ(225deg) scale(0.9);
-      filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.18));
-    }
-    85% {
-      transform: rotateX(345deg) rotateY(375deg) rotateZ(270deg) scale(0.6);
-      filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.12));
-      opacity: 0.8;
-    }
-    92% {
-      transform: rotateX(345deg) rotateY(375deg) rotateZ(315deg) scale(0.3);
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
-      opacity: 0.4;
-    }
-    96% {
-      transform: rotateX(345deg) rotateY(375deg) rotateZ(360deg) scale(0.1);
-      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.05));
-      opacity: 0;
-    }
-    100% {
-      transform: rotateX(-15deg) rotateY(15deg) rotateZ(0deg) scale(1);
-      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
-      opacity: 1;
-    }
-  }
-
-  /* Color shifting animation during solving */
-  @keyframes colorShift {
-    0%, 100% { filter: hue-rotate(0deg) brightness(1); }
-    25% { filter: hue-rotate(90deg) brightness(1.1); }
-    50% { filter: hue-rotate(180deg) brightness(0.9); }
-    75% { filter: hue-rotate(270deg) brightness(1.1); }
-    80% { 
-      filter: hue-rotate(360deg) brightness(1.2);
-      transform: scale(0.8);
-    }
-    90% { 
-      transform: scale(0.3);
-      opacity: 0.5;
-    }
-    95% { 
-      transform: scale(0.1);
-      opacity: 0;
-    }
-  }
-
-  /* Pulsing dot */
-  .pulse-dot {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    animation: showPulse 15s infinite;
-  }
-
-  .dot-core {
-    width: 12px;
-    height: 12px;
-    background: linear-gradient(135deg, #10b981, #059669);
-    border-radius: 50%;
-    position: relative;
-    z-index: 4;
-  }
-
-  .pulse-ring {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 2px solid rgba(16, 185, 129, 0.4);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  .pulse-1 {
-    width: 24px;
-    height: 24px;
-    animation-delay: 0s;
-  }
-
-  .pulse-2 {
-    width: 48px;
-    height: 48px;
-    animation-delay: 0.7s;
-  }
-
-  .pulse-3 {
-    width: 72px;
-    height: 72px;
-    animation-delay: 1.4s;
-  }
-
-  @keyframes showPulse {
-    0%, 94% { opacity: 0; }
-    95%, 99% { opacity: 1; }
-    100% { opacity: 0; }
-  }
-
-  @keyframes pulse {
-    0% {
-      transform: translate(-50%, -50%) scale(0.8);
-      opacity: 1;
-    }
-    100% {
-      transform: translate(-50%, -50%) scale(2);
-      opacity: 0;
-    }
-  }
-
-  /* Responsive design for mobile */
-  @media (max-width: 768px) {
+  <style>
     .cube-container {
+      perspective: 1200px;
+      perspective-origin: center center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 220px;
+      height: 220px;
+      margin: 0 auto;
+      position: relative;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+    }
+  
+    .cube {
+      position: relative;
       width: 180px;
       height: 180px;
-      perspective: 800px;
+      transform-style: preserve-3d;
+      animation: solvingSequence 15s infinite;
     }
-    
-    .cube {
-      width: 140px;
-      height: 140px;
-    }
-    
+  
     .face {
-      width: 140px;
-      height: 140px;
-      padding: 8px;
-      gap: 2px;
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 3px;
+      padding: 12px;
+      box-sizing: border-box;
+      border-radius: 12px;
+      backface-visibility: hidden;
+    }
+  
+    .square {
+      border-radius: 8px;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: center;
+      position: relative;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+  
+    .square::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 6px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+      pointer-events: none;
+    }
+  
+    .square::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      right: 2px;
+      bottom: 2px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, transparent 30%);
+      pointer-events: none;
+    }
+  
+    /* Rubik's Cube Colors using original hex values */
+    .red {
+      background: linear-gradient(135deg, #fca5a5, #f87171);
+      animation: colorShift 15s infinite;
     }
     
+    .blue {
+      background: linear-gradient(135deg, #93c5fd, #60a5fa);
+      animation: colorShift 15s infinite 0.5s;
+    }
+    
+    .green {
+      background: linear-gradient(135deg, #86efac, #4ade80);
+      animation: colorShift 15s infinite 1s;
+    }
+    
+    .yellow {
+      background: linear-gradient(135deg, #fde047, #facc15);
+      animation: colorShift 15s infinite 1.5s;
+    }
+    
+    .orange {
+      background: linear-gradient(135deg, #fdba74, #fb923c);
+      animation: colorShift 15s infinite 2s;
+    }
+    
+    .white {
+      background: linear-gradient(135deg, #ffffff, #f1f5f9);
+      animation: colorShift 15s infinite 2.5s;
+    }
+  
+    /* Face positioning with improved 3D depth */
     .front { 
-      transform: rotateY(0deg) translateZ(70px); 
+      transform: rotateY(0deg) translateZ(90px); 
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
       box-shadow: 
-        inset 0 0 15px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.2),
+        0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .back { 
+      transform: rotateY(180deg) translateZ(90px); 
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .right { 
+      transform: rotateY(90deg) translateZ(90px); 
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.1) 100%);
+      box-shadow: 
+        inset -5px 0 15px rgba(0, 0, 0, 0.1),
         0 3px 10px rgba(0, 0, 0, 0.1);
     }
-    .back { 
-      transform: rotateY(180deg) translateZ(70px); 
-      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
-    }
-    .right { 
-      transform: rotateY(90deg) translateZ(70px); 
-      box-shadow: 
-        inset -3px 0 10px rgba(0, 0, 0, 0.1),
-        0 2px 8px rgba(0, 0, 0, 0.1);
-    }
+    
     .left { 
-      transform: rotateY(-90deg) translateZ(70px); 
+      transform: rotateY(-90deg) translateZ(90px); 
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.15) 100%);
       box-shadow: 
-        inset 3px 0 10px rgba(0, 0, 0, 0.15),
-        0 2px 8px rgba(0, 0, 0, 0.1);
+        inset 5px 0 15px rgba(0, 0, 0, 0.15),
+        0 3px 10px rgba(0, 0, 0, 0.1);
     }
+    
     .top { 
-      transform: rotateX(90deg) translateZ(70px); 
+      transform: rotateX(90deg) translateZ(90px); 
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
       box-shadow: 
-        inset 0 -3px 10px rgba(0, 0, 0, 0.1),
-        0 -2px 8px rgba(0, 0, 0, 0.1);
+        inset 0 -5px 15px rgba(0, 0, 0, 0.1),
+        0 -3px 10px rgba(0, 0, 0, 0.1);
     }
+    
     .bottom { 
-      transform: rotateX(-90deg) translateZ(70px); 
+      transform: rotateX(-90deg) translateZ(90px); 
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
       box-shadow: 
-        inset 0 3px 10px rgba(0, 0, 0, 0.2),
-        0 3px 10px rgba(0, 0, 0, 0.15);
+        inset 0 5px 15px rgba(0, 0, 0, 0.2),
+        0 5px 15px rgba(0, 0, 0, 0.15);
     }
-  }
-</style>
+  
+    /* Enhanced solving animation sequence with 3D perspective */
+    @keyframes solvingSequence {
+      0% {
+        transform: rotateX(-15deg) rotateY(15deg) rotateZ(0deg) scale(1);
+        filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+      }
+      15% {
+        transform: rotateX(165deg) rotateY(105deg) rotateZ(45deg) scale(1.05);
+        filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.2));
+      }
+      30% {
+        transform: rotateX(75deg) rotateY(195deg) rotateZ(90deg) scale(1);
+        filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.18));
+      }
+      45% {
+        transform: rotateX(255deg) rotateY(285deg) rotateZ(135deg) scale(0.95);
+        filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.15));
+      }
+      60% {
+        transform: rotateX(345deg) rotateY(375deg) rotateZ(180deg) scale(1.02);
+        filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.2));
+      }
+      75% {
+        transform: rotateX(345deg) rotateY(375deg) rotateZ(225deg) scale(0.9);
+        filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.18));
+      }
+      85% {
+        transform: rotateX(345deg) rotateY(375deg) rotateZ(270deg) scale(0.6);
+        filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.12));
+        opacity: 0.8;
+      }
+      92% {
+        transform: rotateX(345deg) rotateY(375deg) rotateZ(315deg) scale(0.3);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
+        opacity: 0.4;
+      }
+      96% {
+        transform: rotateX(345deg) rotateY(375deg) rotateZ(360deg) scale(0.1);
+        filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.05));
+        opacity: 0;
+      }
+      100% {
+        transform: rotateX(-15deg) rotateY(15deg) rotateZ(0deg) scale(1);
+        filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+        opacity: 1;
+      }
+    }
+  
+    /* Color shifting animation during solving */
+    @keyframes colorShift {
+      0%, 100% { filter: hue-rotate(0deg) brightness(1); }
+      25% { filter: hue-rotate(90deg) brightness(1.1); }
+      50% { filter: hue-rotate(180deg) brightness(0.9); }
+      75% { filter: hue-rotate(270deg) brightness(1.1); }
+      80% { 
+        filter: hue-rotate(360deg) brightness(1.2);
+        transform: scale(0.8);
+      }
+      90% { 
+        transform: scale(0.3);
+        opacity: 0.5;
+      }
+      95% { 
+        transform: scale(0.1);
+        opacity: 0;
+      }
+    }
+  
+    /* Pulsing dot */
+    .pulse-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      animation: showPulse 15s infinite;
+    }
+  
+    .dot-core {
+      width: 12px;
+      height: 12px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-radius: 50%;
+      position: relative;
+      z-index: 4;
+    }
+  
+    .pulse-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 2px solid rgba(16, 185, 129, 0.4);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+  
+    .pulse-1 {
+      width: 24px;
+      height: 24px;
+      animation-delay: 0s;
+    }
+  
+    .pulse-2 {
+      width: 48px;
+      height: 48px;
+      animation-delay: 0.7s;
+    }
+  
+    .pulse-3 {
+      width: 72px;
+      height: 72px;
+      animation-delay: 1.4s;
+    }
+  
+    @keyframes showPulse {
+      0%, 94% { opacity: 0; }
+      95%, 99% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+  
+    @keyframes pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+      }
+    }
+  
+    /* Responsive design for mobile */
+    @media (max-width: 768px) {
+      .cube-container {
+        width: 180px;
+        height: 180px;
+        perspective: 800px;
+      }
+      
+      .cube {
+        width: 140px;
+        height: 140px;
+      }
+      
+      .face {
+        width: 140px;
+        height: 140px;
+        padding: 8px;
+        gap: 2px;
+      }
+      
+      .front { 
+        transform: rotateY(0deg) translateZ(70px); 
+        box-shadow: 
+          inset 0 0 15px rgba(255, 255, 255, 0.2),
+          0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+      .back { 
+        transform: rotateY(180deg) translateZ(70px); 
+        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+      }
+      .right { 
+        transform: rotateY(90deg) translateZ(70px); 
+        box-shadow: 
+          inset -3px 0 10px rgba(0, 0, 0, 0.1),
+          0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .left { 
+        transform: rotateY(-90deg) translateZ(70px); 
+        box-shadow: 
+          inset 3px 0 10px rgba(0, 0, 0, 0.15),
+          0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .top { 
+        transform: rotateX(90deg) translateZ(70px); 
+        box-shadow: 
+          inset 0 -3px 10px rgba(0, 0, 0, 0.1),
+          0 -2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .bottom { 
+        transform: rotateX(-90deg) translateZ(70px); 
+        box-shadow: 
+          inset 0 3px 10px rgba(0, 0, 0, 0.2),
+          0 3px 10px rgba(0, 0, 0, 0.15);
+      }
+    }
+  </style>
