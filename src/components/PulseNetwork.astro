@@ -1,0 +1,226 @@
+---
+// Pulse Wave Network Component - Interconnected nodes with flowing pulse waves
+---
+
+<div class="pulse-network">
+  <!-- Network container -->
+  <svg viewBox="0 0 400 400" class="w-80 h-80">
+    <!-- Connection lines -->
+    <g class="connections">
+      <!-- Main connecting lines -->
+      <line x1="100" y1="120" x2="200" y2="80" class="connection-line" />
+      <line x1="200" y1="80" x2="300" y2="120" class="connection-line" />
+      <line x1="300" y1="120" x2="280" y2="220" class="connection-line" />
+      <line x1="280" y1="220" x2="200" y2="280" class="connection-line" />
+      <line x1="200" y1="280" x2="120" y2="220" class="connection-line" />
+      <line x1="120" y1="220" x2="100" y2="120" class="connection-line" />
+      <line x1="200" y1="80" x2="200" y2="180" class="connection-line" />
+      <line x1="200" y1="180" x2="280" y2="220" class="connection-line" />
+      <line x1="200" y1="180" x2="120" y2="220" class="connection-line" />
+    </g>
+    
+    <!-- Pulse waves traveling along connections -->
+    <g class="pulse-waves">
+      <!-- Pulse dots that travel along paths -->
+      <circle r="3" class="pulse-dot pulse-1">
+        <animateMotion dur="4s" repeatCount="indefinite">
+          <path d="M100,120 L200,80 L300,120 L280,220 L200,280 L120,220 Z" />
+        </animateMotion>
+      </circle>
+      <circle r="3" class="pulse-dot pulse-2">
+        <animateMotion dur="3s" repeatCount="indefinite" begin="1s">
+          <path d="M200,80 L200,180 L280,220" />
+        </animateMotion>
+      </circle>
+      <circle r="3" class="pulse-dot pulse-3">
+        <animateMotion dur="3.5s" repeatCount="indefinite" begin="2s">
+          <path d="M200,180 L120,220 L100,120" />
+        </animateMotion>
+      </circle>
+    </g>
+    
+    <!-- Network nodes -->
+    <g class="nodes">
+      <!-- Core central node -->
+      <g class="node core-node" transform="translate(200, 180)">
+        <circle r="8" class="node-core" />
+        <circle r="12" class="node-ring ring-1" />
+        <circle r="16" class="node-ring ring-2" />
+      </g>
+      
+      <!-- Peripheral nodes -->
+      <g class="node" transform="translate(100, 120)">
+        <circle r="6" class="node-core" />
+        <circle r="10" class="node-ring ring-1" />
+      </g>
+      <g class="node" transform="translate(200, 80)">
+        <circle r="6" class="node-core" />
+        <circle r="10" class="node-ring ring-1" />
+      </g>
+      <g class="node" transform="translate(300, 120)">
+        <circle r="6" class="node-core" />
+        <circle r="10" class="node-ring ring-1" />
+      </g>
+      <g class="node" transform="translate(280, 220)">
+        <circle r="6" class="node-core" />
+        <circle r="10" class="node-ring ring-1" />
+      </g>
+      <g class="node" transform="translate(200, 280)">
+        <circle r="6" class="node-core" />
+        <circle r="10" class="node-ring ring-1" />
+      </g>
+      <g class="node" transform="translate(120, 220)">
+        <circle r="6" class="node-core" />
+        <circle r="10" class="node-ring ring-1" />
+      </g>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .pulse-network {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Connection lines */
+  .connection-line {
+    stroke: rgba(96, 165, 250, 0.3);
+    stroke-width: 2;
+    fill: none;
+    animation: line-pulse 3s ease-in-out infinite;
+  }
+  
+  /* Network nodes */
+  .node-core {
+    fill: rgba(16, 185, 129, 0.9);
+    animation: node-pulse 2s ease-in-out infinite;
+  }
+  
+  .core-node .node-core {
+    fill: rgba(96, 165, 250, 0.9);
+    animation: core-pulse 2.5s ease-in-out infinite;
+  }
+  
+  .node-ring {
+    fill: none;
+    stroke: rgba(96, 165, 250, 0.4);
+    stroke-width: 1;
+    opacity: 0;
+  }
+  
+  .ring-1 {
+    animation: ring-pulse 2s ease-in-out infinite;
+  }
+  
+  .ring-2 {
+    animation: ring-pulse 2s ease-in-out infinite 0.5s;
+  }
+  
+  /* Pulse dots */
+  .pulse-dot {
+    fill: rgba(249, 115, 22, 0.9);
+    animation: dot-glow 1s ease-in-out infinite alternate;
+  }
+  
+  .pulse-1 {
+    fill: rgba(239, 68, 68, 0.9);
+  }
+  
+  .pulse-2 {
+    fill: rgba(96, 165, 250, 0.9);
+  }
+  
+  .pulse-3 {
+    fill: rgba(16, 185, 129, 0.9);
+  }
+  
+  /* Animations */
+  @keyframes node-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes core-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes ring-pulse {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1.2);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.8);
+    }
+  }
+  
+  @keyframes line-pulse {
+    0%, 100% {
+      stroke-opacity: 0.3;
+    }
+    50% {
+      stroke-opacity: 0.8;
+    }
+  }
+  
+  @keyframes dot-glow {
+    0% {
+      opacity: 0.6;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  }
+  
+  /* Dark mode adjustments */
+  @media (prefers-color-scheme: dark) {
+    .connection-line {
+      stroke: rgba(148, 163, 184, 0.4);
+    }
+    
+    .node-core {
+      fill: rgba(34, 197, 94, 0.9);
+    }
+    
+    .core-node .node-core {
+      fill: rgba(59, 130, 246, 0.9);
+    }
+    
+    .node-ring {
+      stroke: rgba(148, 163, 184, 0.3);
+    }
+  }
+  
+  /* Hover effects */
+  .pulse-network:hover .connection-line {
+    animation-duration: 1.5s;
+  }
+  
+  .pulse-network:hover .node-core {
+    animation-duration: 1s;
+  }
+</style>

@@ -1,5 +1,5 @@
 ---
-import RubiksCube from './RubiksCube.astro';
+import PulseGrid from './PulseGrid.astro';
 import PulseWaves from './PulseWaves.astro';
 ---
 
@@ -40,21 +40,21 @@ import PulseWaves from './PulseWaves.astro';
 				</p>
 				
 				<div class="group">
-					<a href="#about" class="inline-flex items-center px-10 py-4 bg-gradient-to-r from-blue-600 to-green-600 dark:from-blue-500 dark:to-green-500 text-white font-medium rounded-full hover:from-red-500 hover:to-orange-500 dark:hover:from-red-400 dark:hover:to-orange-400 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl">
-						<span class="mr-3">Learn More</span>
-						<svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-						</svg>
-					</a>
+									<a href="#about" class="inline-flex items-center px-10 py-4 bg-gradient-to-r from-blue-600 to-green-600 dark:from-blue-500 dark:to-green-500 text-white font-medium rounded-full hover:from-red-500 hover:to-orange-500 dark:hover:from-red-400 dark:hover:to-orange-400 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl" aria-label="Learn more about Pulse COOP">
+					<span class="mr-3">Learn More</span>
+					<svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+					</svg>
+				</a>
 				</div>
 			</div>
 			
-			<!-- Rubik's Cube Column -->
+			<!-- Pulse Grid Animation -->
 			<div class="flex justify-center lg:justify-end">
 				<div class="relative">
 					<!-- Floating animation wrapper -->
 					<div class="animate-float">
-						<RubiksCube />
+						<PulseGrid />
 					</div>
 					<!-- Subtle glow effect -->
 					<div class="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-slate-400/20 dark:from-emerald-500/20 dark:to-slate-500/20 rounded-full blur-3xl -z-10"></div>
