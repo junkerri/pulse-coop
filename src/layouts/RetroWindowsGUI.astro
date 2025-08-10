@@ -1,0 +1,185 @@
+---
+interface Props {
+  title?: string;
+  width?: string;
+  height?: string;
+}
+
+const { title = "Window", width = "600px", height = "400px" } = Astro.props;
+---
+
+<div class="retro-windows-gui" style={`width: ${width}; height: ${height};`}>
+  <!-- Window Title Bar -->
+  <div class="retro-windows-gui-header">
+    <div class="retro-windows-gui-title">
+      <img src="/favicon-simple.svg" alt="Icon" class="window-icon" />
+      <span class="window-title-text">{title}</span>
+    </div>
+    <div class="window-controls">
+      <button class="window-control minimize">_</button>
+      <button class="window-control maximize">□</button>
+      <button class="window-control close">×</button>
+    </div>
+  </div>
+  
+  <!-- Window Content Area -->
+  <div class="retro-windows-gui-content">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .retro-windows-gui {
+    background: linear-gradient(180deg, #c0c0c0 0%, #d4d0c8 100%);
+    border: 2px solid #000;
+    border-radius: 0;
+    box-shadow: 
+      inset -1px -1px #0a0a0a,
+      inset 1px 1px #dfdfdf,
+      2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-family: "MS Sans Serif", "Microsoft Sans Serif", sans-serif;
+    font-size: 11px;
+    color: #000;
+    position: relative;
+    margin: 20px auto;
+  }
+
+  .retro-windows-gui-header {
+    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    color: white;
+    padding: 4px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 20px;
+    border-bottom: 2px solid #000;
+    cursor: move;
+  }
+
+  .retro-windows-gui-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: bold;
+    font-size: 11px;
+  }
+
+  .window-icon {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0) invert(1);
+  }
+
+  .window-title-text {
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  }
+
+  .window-controls {
+    display: flex;
+    gap: 2px;
+  }
+
+  .window-control {
+    width: 16px;
+    height: 16px;
+    background: #c0c0c0;
+    border: 1px solid #000;
+    border-radius: 0;
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+      inset -1px -1px #0a0a0a,
+      inset 1px 1px #dfdfdf;
+  }
+
+  .window-control:hover {
+    background: #d4d0c8;
+  }
+
+  .window-control:active {
+    background: #a0a0a0;
+    box-shadow: 
+      inset 1px 1px #0a0a0a,
+      inset -1px -1px #dfdfdf;
+  }
+
+  .retro-windows-gui-content {
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid #c0c0c0;
+    margin: 2px;
+    height: calc(100% - 44px);
+    overflow-y: auto;
+  }
+
+  /* Scrollbar styling */
+  .retro-windows-gui-content::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  .retro-windows-gui-content::-webkit-scrollbar-track {
+    background: #c0c0c0;
+    border: 1px solid #000;
+  }
+
+  .retro-windows-gui-content::-webkit-scrollbar-thumb {
+    background: #808080;
+    border: 1px solid #000;
+    box-shadow: 
+      inset -1px -1px #0a0a0a,
+      inset 1px 1px #dfdfdf;
+  }
+
+  /* Classic Windows elements */
+  .retro-button {
+    background: #c0c0c0;
+    border: 2px solid #000;
+    border-radius: 0;
+    padding: 4px 12px;
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    box-shadow: 
+      inset -1px -1px #0a0a0a,
+      inset 1px 1px #dfdfdf;
+  }
+
+  .retro-button:hover {
+    background: #d4d0c8;
+  }
+
+  .retro-button:active {
+    background: #a0a0a0;
+    box-shadow: 
+      inset 1px 1px #0a0a0a,
+      inset -1px -1px #dfdfdf;
+  }
+
+  .retro-input {
+    background: white;
+    border: 2px inset #c0c0c0;
+    padding: 4px;
+    font-family: inherit;
+    font-size: 11px;
+  }
+
+  .retro-select {
+    background: white;
+    border: 2px inset #c0c0c0;
+    padding: 2px;
+    font-family: inherit;
+    font-size: 11px;
+  }
+
+  /* Classic Windows colors */
+  .bg-windows-gray { background: #c0c0c0; }
+  .bg-windows-blue { background: #000080; }
+  .bg-windows-green { background: #008000; }
+  .bg-windows-red { background: #800000; }
+  .bg-windows-yellow { background: #808000; }
+</style>
+

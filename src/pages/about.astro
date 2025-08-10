@@ -1,0 +1,959 @@
+---
+import RetroWindowsGUI from '../layouts/RetroWindowsGUI.astro';
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - Pulse COOP</title>
+  <style>
+    body {
+      background: url('/windows.webp') center/cover no-repeat;
+      margin: 0;
+      padding: 20px;
+      font-family: "MS Sans Serif", "Microsoft Sans Serif", sans-serif;
+      color: #000;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .desktop-icon {
+      display: inline-block;
+      width: 80px;
+      text-align: center;
+      margin: 10px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.1s ease;
+      touch-action: manipulation;
+    }
+
+    .desktop-icon img {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 5px;
+      filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+    }
+
+    .desktop-icon span {
+      display: block;
+      font-size: 10px;
+      color: white;
+      text-shadow: 1px 1px 1px #000;
+      word-wrap: break-word;
+      line-height: 1.2;
+    }
+
+    .desktop-icon:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 2px;
+      transform: scale(1.05);
+    }
+
+    .desktop-icon.selected {
+      background: rgba(0, 0, 128, 0.7);
+      border-radius: 2px;
+      color: white;
+    }
+
+    .desktop-icon.selected span {
+      color: white;
+    }
+
+    .window-container {
+      position: absolute;
+      z-index: 100;
+    }
+
+    .window-container.minimized {
+      display: none;
+    }
+
+    .window-container.maximized {
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      margin: 0 !important;
+    }
+
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 28px;
+      background: #c0c0c0;
+      border-top: 2px solid #dfdfdf;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    .start-button {
+      background: #c0c0c0;
+      border: 2px solid #000;
+      border-radius: 0;
+      padding: 4px 12px;
+      font-family: inherit;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #dfdfdf;
+      margin-right: 8px;
+      touch-action: manipulation;
+    }
+
+    .start-button:hover {
+      background: #d4d0c8;
+    }
+
+    .start-button:active {
+      background: #a0a0a0;
+      box-shadow: 
+        inset 1px 1px #0a0a0a,
+        inset -1px -1px #dfdfdf;
+    }
+
+    .taskbar-item {
+      background: #c0c0c0;
+      border: 2px solid #000;
+      border-radius: 0;
+      padding: 4px 8px;
+      margin: 0 2px;
+      font-family: inherit;
+      font-size: 10px;
+      cursor: pointer;
+      box-shadow: 
+        inset -1px -1px #0a0a0a,
+        inset 1px 1px #dfdfdf;
+      transition: all 0.1s ease;
+      touch-action: manipulation;
+    }
+
+    .taskbar-item:hover {
+      background: #d4d0c8;
+    }
+
+    .taskbar-item.active {
+      background: #d4d0c8;
+      border-color: #000080;
+    }
+
+    .clock {
+      margin-left: auto;
+      background: #c0c0c0;
+      border: 2px inset #c0c0c0;
+      padding: 4px 8px;
+      font-family: inherit;
+      font-size: 10px;
+    }
+
+    .context-menu {
+      position: fixed;
+      background: #c0c0c0;
+      border: 2px solid #000;
+      border-radius: 0;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      z-index: 2000;
+      min-width: 150px;
+      display: none;
+    }
+
+    .context-menu-item {
+      padding: 8px 16px;
+      cursor: pointer;
+      border-bottom: 1px solid #808080;
+      font-size: 11px;
+      touch-action: manipulation;
+    }
+
+    .context-menu-item:hover {
+      background: #000080;
+      color: white;
+    }
+
+    .context-menu-item:last-child {
+      border-bottom: none;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #c0c0c0;
+      border: 2px solid #000;
+      border-radius: 0;
+      padding: 12px;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      z-index: 1500;
+      max-width: 300px;
+      display: none;
+    }
+
+    .notification.show {
+      display: block;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .desktop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 80px);
+      gap: 10px;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      .desktop-grid {
+        grid-template-columns: repeat(auto-fill, 70px);
+        gap: 8px;
+        padding: 15px;
+        max-width: 100%;
+      }
+
+      .desktop-icon {
+        width: 70px;
+        margin: 8px;
+      }
+
+      .desktop-icon img {
+        width: 28px;
+        height: 28px;
+      }
+
+      .desktop-icon span {
+        font-size: 9px;
+        line-height: 1.1;
+      }
+
+      .window-container {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        margin: 0 !important;
+        z-index: 200;
+      }
+
+      .retro-windows-gui {
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+      }
+
+      .retro-windows-gui-content {
+        height: calc(100vh - 44px) !important;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .taskbar {
+        height: 50px;
+        padding: 0 12px;
+      }
+
+      .start-button {
+        padding: 8px 16px;
+        font-size: 14px;
+        min-height: 40px;
+      }
+
+      .taskbar-item {
+        padding: 8px 12px;
+        font-size: 12px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+      }
+
+      .clock {
+        padding: 8px 12px;
+        font-size: 12px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+      }
+
+      .notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        font-size: 14px;
+      }
+
+      .context-menu {
+        min-width: 200px;
+        font-size: 14px;
+      }
+
+      .context-menu-item {
+        padding: 12px 20px;
+        font-size: 14px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+      }
+
+      /* Mobile-specific window content adjustments */
+      .retro-windows-gui-content > div {
+        padding: 16px;
+      }
+
+      .retro-windows-gui-content h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      .retro-windows-gui-content h3 {
+        font-size: 18px;
+        margin-bottom: 16px;
+      }
+
+      .retro-windows-gui-content h4 {
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+
+      .retro-button {
+        min-height: 44px;
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+
+      .retro-input {
+        min-height: 44px;
+        font-size: 16px;
+        padding: 8px;
+      }
+
+      .retro-select {
+        min-height: 44px;
+        font-size: 16px;
+        padding: 8px;
+      }
+    }
+
+    /* Tablet Styles */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .desktop-grid {
+        grid-template-columns: repeat(auto-fill, 75px);
+        gap: 12px;
+        padding: 18px;
+      }
+
+      .desktop-icon {
+        width: 75px;
+        margin: 9px;
+      }
+
+      .window-container {
+        max-width: 90vw;
+        max-height: 90vh;
+      }
+    }
+
+    /* Touch-friendly improvements */
+    @media (hover: none) and (pointer: coarse) {
+      .desktop-icon:hover {
+        transform: none;
+      }
+
+      .desktop-icon:active {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(0.95);
+      }
+
+      .retro-button:hover {
+        background: #c0c0c0;
+      }
+
+      .retro-button:active {
+        background: #a0a0a0;
+        transform: scale(0.98);
+      }
+
+      .taskbar-item:hover {
+        background: #c0c0c0;
+      }
+
+      .taskbar-item:active {
+        background: #d4d0c8;
+      }
+    }
+
+    /* Landscape mobile optimization */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .desktop-grid {
+        grid-template-columns: repeat(auto-fill, 60px);
+        gap: 6px;
+        padding: 10px;
+      }
+
+      .desktop-icon {
+        width: 60px;
+        margin: 6px;
+      }
+
+      .desktop-icon img {
+        width: 24px;
+        height: 24px;
+      }
+
+      .desktop-icon span {
+        font-size: 8px;
+      }
+
+      .taskbar {
+        height: 40px;
+      }
+
+      .start-button,
+      .taskbar-item,
+      .clock {
+        min-height: 32px;
+        font-size: 11px;
+      }
+    }
+
+    /* High DPI displays */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .desktop-icon img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+      }
+    }
+
+    /* Accessibility improvements for mobile */
+    @media (max-width: 768px) {
+      .desktop-icon:focus,
+      .retro-button:focus,
+      .taskbar-item:focus {
+        outline: 2px solid #000080;
+        outline-offset: 2px;
+      }
+
+      .retro-input:focus,
+      .retro-select:focus {
+        outline: 2px solid #000080;
+        outline-offset: 1px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Desktop Icons -->
+  <div class="desktop-grid">
+    <div class="desktop-icon" data-window="about" onclick="openWindow('about')" tabindex="0" role="button" aria-label="About Pulse COOP">
+      <img src="/favicon-simple.svg" alt="About" />
+      <span>About Pulse<br/>COOP</span>
+    </div>
+
+    <div class="desktop-icon" data-window="team" onclick="openWindow('team')" tabindex="0" role="button" aria-label="Our Team">
+      <img src="/favicon-simple.svg" alt="Team" />
+      <span>Our Team</span>
+    </div>
+
+    <div class="desktop-icon" data-window="home" onclick="goHome()" tabindex="0" role="button" aria-label="Go Home">
+      <img src="/favicon-simple.svg" alt="Home" />
+      <span>Go Home</span>
+    </div>
+
+    <div class="desktop-icon" data-window="mission" onclick="openWindow('mission')" tabindex="0" role="button" aria-label="Mission">
+      <img src="/favicon-simple.svg" alt="Mission" />
+      <span>Mission</span>
+    </div>
+
+    <div class="desktop-icon" data-window="projects" onclick="openWindow('projects')" tabindex="0" role="button" aria-label="Projects">
+      <img src="/favicon-simple.svg" alt="Projects" />
+      <span>Projects</span>
+    </div>
+
+    <div class="desktop-icon" data-window="contact" onclick="openWindow('contact')" tabindex="0" role="button" aria-label="Contact Us">
+      <img src="/favicon-simple.svg" alt="Contact" />
+      <span>Contact Us</span>
+    </div>
+  </div>
+
+  <!-- About Window -->
+  <div class="window-container" id="about-window" style="top: 100px; left: 150px;">
+    <RetroWindowsGUI title="About Pulse COOP" width="700px" height="500px">
+      <div style="display: grid; grid-template-columns: 200px 1fr; gap: 20px;">
+        <!-- Left Sidebar -->
+        <div class="bg-windows-gray" style="padding: 16px; border: 2px inset #c0c0c0;">
+          <h3 style="margin: 0 0 16px 0; color: #000080;">Quick Links</h3>
+                                              <div style="margin-bottom: 12px;">
+                <button class="retro-button" style="width: 100%; margin-bottom: 8px;" onclick="showNotification('Our Story', 'Learn about how Pulse COOP was founded and our journey so far!')">Our Story</button>
+                <button class="retro-button" style="width: 100%; margin-bottom: 8px;" onclick="openWindow('team')">Meet the Team</button>
+                <button class="retro-button" style="width: 100%; margin-bottom: 8px;" onclick="openWindow('mission')">Mission</button>
+                <button class="retro-button" style="width: 100%; margin-bottom: 8px;" onclick="openWindow('contact')">Contact</button>
+          </div>
+          
+          <div style="border-top: 2px solid #808080; padding-top: 12px;">
+            <h4 style="margin: 0 0 8px 0; color: #000080;">Company Info</h4>
+            <p style="margin: 0 0 4px 0; font-size: 10px;"><strong>Founded:</strong> 2024</p>
+            <p style="margin: 0 0 4px 0; font-size: 10px;"><strong>Type:</strong> Worker-Owned Coop</p>
+            <p style="margin: 0 0 4px 0; font-size: 10px;"><strong>Industry:</strong> Technology</p>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div>
+          <h2 style="color: #000080; margin: 0 0 16px 0; border-bottom: 2px solid #c0c0c0; padding-bottom: 8px;">
+            Welcome to Pulse COOP
+          </h2>
+          
+          <p style="line-height: 1.4; margin-bottom: 16px;">
+            Pulse COOP is a worker-owned technology cooperative founded by <strong>Aastha</strong>, <strong>Riley</strong>, and <strong>Andrew</strong>. 
+            We believe in the power of collaboration, innovation, and shared ownership to create better technology solutions.
+          </p>
+
+          <div style="background: #ffffe1; border: 2px inset #c0c0c0; padding: 12px; margin-bottom: 16px;">
+            <h4 style="margin: 0 0 8px 0; color: #800000;">💡 Our Vision</h4>
+            <p style="margin: 0; font-size: 12px;">
+              To democratize technology development and create sustainable, ethical solutions that benefit all stakeholders.
+            </p>
+          </div>
+
+          <h3 style="color: #000080; margin: 20px 0 12px 0;">Core Values</h3>
+          <ul style="line-height: 1.6; margin-bottom: 16px;">
+            <li><strong>Worker Ownership:</strong> Every team member has a stake in our success</li>
+            <li><strong>Collaboration:</strong> We believe the best solutions come from working together</li>
+            <li><strong>Innovation:</strong> Constantly pushing boundaries in technology</li>
+            <li><strong>Sustainability:</strong> Building for the long term, not just quick wins</li>
+          </ul>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px;">
+            <div style="background: #e1f3ff; border: 2px inset #c0c0c0; padding: 12px;">
+              <h4 style="margin: 0 0 8px 0; color: #000080;">🚀 What We Do</h4>
+              <p style="margin: 0; font-size: 12px;">
+                We develop cutting-edge technology solutions, focusing on web applications, 
+                mobile apps, and innovative software that solves real-world problems.
+              </p>
+            </div>
+            
+            <div style="background: #e1ffe1; border: 2px inset #c0c0c0; padding: 12px;">
+              <h4 style="margin: 0 0 8px 0; color: #008000;">🤝 How We Work</h4>
+              <p style="margin: 0; font-size: 12px;">
+                As a cooperative, decisions are made democratically, profits are shared fairly, 
+                and everyone has a voice in shaping our future.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </RetroWindowsGUI>
+  </div>
+
+  <!-- Team Window -->
+  <div class="window-container" id="team-window" style="top: 200px; left: 300px; display: none;">
+    <RetroWindowsGUI title="Our Team" width="600px" height="400px">
+      <div style="text-align: center;">
+        <h2 style="color: #000080; margin: 0 0 20px 0;">Meet the Team</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+          <div style="background: #e1f3ff; border: 2px inset #c0c0c0; padding: 16px;">
+            <div style="width: 64px; height: 64px; background: #c0c0c0; border: 2px inset #c0c0c0; margin: 0 auto 12px auto; display: flex; align-items: center; justify-content: center; font-size: 24px;">👩‍💻</div>
+            <h4 style="margin: 0 0 8px 0; color: #000080;">Aastha</h4>
+            <p style="margin: 0; font-size: 12px;">Co-founder & Tech Lead</p>
+          </div>
+          
+          <div style="background: #e1f3ff; border: 2px inset #c0c0c0; padding: 16px;">
+            <div style="width: 64px; height: 64px; background: #c0c0c0; border: 2px inset #c0c0c0; margin: 0 auto 12px auto; display: flex; align-items: center; justify-content: center; font-size: 24px;">👨‍💻</div>
+            <h4 style="margin: 0 0 8px 0; color: #000080;">Riley</h4>
+            <p style="margin: 0; font-size: 12px;">Co-founder & Developer</p>
+          </div>
+          
+          <div style="background: #e1f3ff; border: 2px inset #c0c0c0; padding: 16px;">
+            <div style="width: 64px; height: 64px; background: #c0c0c0; border: 2px inset #c0c0c0; margin: 0 auto 12px auto; display: flex; align-items: center; justify-content: center; font-size: 24px;">👨‍💻</div>
+            <h4 style="margin: 0 0 8px 0; color: #000080;">Andrew</h4>
+            <p style="margin: 0; font-size: 12px;">Co-founder & Designer</p>
+          </div>
+        </div>
+        
+        <p style="margin-top: 20px; font-size: 12px; color: #666;">
+          Together, we're building the future of collaborative technology development.
+        </p>
+      </div>
+    </RetroWindowsGUI>
+  </div>
+
+  <!-- Mission Window -->
+  <div class="window-container" id="mission-window" style="top: 150px; left: 500px; display: none;">
+    <RetroWindowsGUI title="Our Mission" width="500px" height="350px">
+      <div style="text-align: center;">
+        <h2 style="color: #000080; margin: 0 0 20px 0;">Our Mission</h2>
+        
+        <div style="background: #ffffe1; border: 2px inset #c0c0c0; padding: 20px; margin-bottom: 20px;">
+          <h3 style="margin: 0 0 16px 0; color: #800000;">🌟 Mission Statement</h3>
+          <p style="margin: 0; line-height: 1.6;">
+            To democratize technology development through cooperative ownership, 
+            fostering innovation while ensuring fair and sustainable practices.
+          </p>
+        </div>
+        
+        <div style="text-align: left;">
+          <h4 style="color: #000080; margin: 20px 0 12px 0;">Key Objectives:</h4>
+          <ul style="line-height: 1.6; margin-bottom: 16px;">
+            <li>Create accessible technology solutions for all</li>
+            <li>Build sustainable business models</li>
+            <li>Foster community and collaboration</li>
+            <li>Promote ethical technology practices</li>
+          </ul>
+        </div>
+      </div>
+    </RetroWindowsGUI>
+  </div>
+
+  <!-- Projects Window -->
+  <div class="window-container" id="projects-window" style="top: 250px; left: 100px; display: none;">
+    <RetroWindowsGUI title="Our Projects" width="650px" height="450px">
+      <div>
+        <h2 style="color: #000080; margin: 0 0 20px 0;">Featured Projects</h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div style="background: #e1f3ff; border: 2px inset #c0c0c0; padding: 16px;">
+            <h4 style="margin: 0 0 12px 0; color: #000080;">🌐 Web Applications</h4>
+            <p style="margin: 0 0 12px 0; font-size: 12px;">
+              Modern, responsive web applications built with cutting-edge technologies.
+            </p>
+            <button class="retro-button" onclick="showNotification('Web Apps', 'We specialize in React, Next.js, and modern web technologies!')">Learn More</button>
+          </div>
+          
+          <div style="background: #e1ffe1; border: 2px inset #c0c0c0; padding: 16px;">
+            <h4 style="margin: 0 0 12px 0; color: #008000;">📱 Mobile Development</h4>
+            <p style="margin: 0 0 12px 0; font-size: 12px;">
+              Cross-platform mobile applications for iOS and Android.
+            </p>
+            <button class="retro-button" onclick="showNotification('Mobile Apps', 'React Native and Flutter are our go-to frameworks!')">Learn More</button>
+          </div>
+          
+          <div style="background: #ffe1e1; border: 2px inset #c0c0c0; padding: 16px;">
+            <h4 style="margin: 0 0 12px 0; color: #800000;">🔧 API Development</h4>
+            <p style="margin: 0 0 12px 0; font-size: 12px;">
+              Robust backend APIs and microservices architecture.
+            </p>
+            <button class="retro-button" onclick="showNotification('APIs', 'FastAPI, Node.js, and Python are our backend specialties!')">Learn More</button>
+          </div>
+          
+          <div style="background: #f0e1ff; border: 2px inset #c0c0c0; padding: 16px;">
+            <h4 style="margin: 0 0 12px 0; color: #800080;">🎨 UI/UX Design</h4>
+            <p style="margin: 0 0 12px 0; font-size: 12px;">
+              User-centered design with modern aesthetics and accessibility.
+            </p>
+            <button class="retro-button" onclick="showNotification('Design', 'We focus on user experience and inclusive design principles!')">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </RetroWindowsGUI>
+  </div>
+
+  <!-- Contact Window -->
+  <div class="window-container" id="contact-window" style="top: 180px; left: 400px; display: none;">
+    <RetroWindowsGUI title="Contact Us" width="550px" height="400px">
+      <div>
+        <h2 style="color: #000080; margin: 0 0 20px 0;">Get in Touch</h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div>
+            <h4 style="color: #000080; margin: 0 0 12px 0;">Contact Information</h4>
+            <p style="margin: 0 0 8px 0; font-size: 12px;"><strong>Email:</strong> hello@pulsecoop.com</p>
+            <p style="margin: 0 0 8px 0; font-size: 12px;"><strong>Phone:</strong> (555) 123-4567</p>
+            <p style="margin: 0 0 8px 0; font-size: 12px;"><strong>Location:</strong> Remote First</p>
+            
+            <div style="margin-top: 20px;">
+              <h4 style="color: #000080; margin: 0 0 12px 0;">Social Media</h4>
+              <button class="retro-button" style="margin-right: 8px;" onclick="showNotification('LinkedIn', 'Connect with us on LinkedIn!')">LinkedIn</button>
+              <button class="retro-button" style="margin-right: 8px;" onclick="showNotification('Twitter', 'Follow us on Twitter!')">Twitter</button>
+              <button class="retro-button" onclick="showNotification('GitHub', 'Check out our open source projects!')">GitHub</button>
+            </div>
+          </div>
+          
+          <div>
+            <h4 style="color: #000080; margin: 0 0 12px 0;">Send Message</h4>
+            <div style="margin-bottom: 12px;">
+              <label style="display: block; margin-bottom: 4px; font-size: 11px;">Name:</label>
+              <input type="text" class="retro-input" style="width: 100%;" placeholder="Your name">
+            </div>
+            <div style="margin-bottom: 12px;">
+              <label style="display: block; margin-bottom: 4px; font-size: 11px;">Email:</label>
+              <input type="email" class="retro-input" style="width: 100%;" placeholder="your@email.com">
+            </div>
+            <div style="margin-bottom: 12px;">
+              <label style="display: block; margin-bottom: 4px; font-size: 11px;">Message:</label>
+              <textarea class="retro-input" style="width: 100%; height: 80px; resize: none;" placeholder="Your message"></textarea>
+            </div>
+            <button class="retro-button" onclick="showNotification('Message Sent', 'Thank you! We\'ll get back to you soon.')">Send Message</button>
+          </div>
+        </div>
+      </div>
+    </RetroWindowsGUI>
+  </div>
+
+  <!-- Context Menu -->
+  <div class="context-menu" id="context-menu">
+    <div class="context-menu-item" onclick="openWindow('about')">Open</div>
+    <div class="context-menu-item" onclick="showNotification('Properties', 'Window properties would go here!')">Properties</div>
+    <div class="context-menu-item" onclick="showNotification('Create Shortcut', 'Shortcut created on desktop!')">Create Shortcut</div>
+  </div>
+
+  <!-- Notification -->
+  <div class="notification" id="notification">
+    <div id="notification-content"></div>
+  </div>
+
+  <!-- Taskbar -->
+  <div class="taskbar">
+    <button class="start-button" onclick="showNotification('Start Menu', 'Start menu would appear here!')">Start</button>
+    <div class="taskbar-item" onclick="focusWindow('about')">About Pulse COOP</div>
+    <div class="taskbar-item" onclick="showNotification('My Computer', 'My Computer would open here!')">My Computer</div>
+    <div class="taskbar-item" onclick="showNotification('Internet Explorer', 'Internet Explorer would launch here!')">Internet Explorer</div>
+    <div class="clock" id="clock">12:00 PM</div>
+  </div>
+
+  <script>
+    // Global functions accessible to onclick handlers
+    (window as any).goHome = function() {
+      // Show a notification before going home
+      if ((window as any).showNotification) {
+        (window as any).showNotification('Going Home', 'Returning to the main page...');
+      }
+      
+      // Navigate to home page after a short delay
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1000);
+    };
+
+    let activeWindow = 'about';
+    let windowStates = {};
+    let isMobile = window.innerWidth <= 768;
+
+    // Update clock
+    function updateClock() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('en-US', { 
+        hour: 'numeric', 
+        minute: '2-digit',
+        hour12: true 
+      });
+      const clockElement = document.getElementById('clock');
+      if (clockElement) {
+        clockElement.textContent = timeString;
+      }
+    }
+    
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Window management functions are now global
+
+    function updateTaskbar() {
+      document.querySelectorAll('.taskbar-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      const activeItem = document.querySelector(`[onclick*="${activeWindow}"]`);
+      if (activeItem) {
+        activeItem.classList.add('active');
+      }
+    }
+
+    // Make functions globally accessible
+    (window as any).showNotification = function(title: string, message: string) {
+      const notification = document.getElementById('notification');
+      const content = document.getElementById('notification-content');
+      
+      if (notification && content) {
+        content.innerHTML = `<strong>${title}</strong><br>${message}`;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+          notification.classList.remove('show');
+        }, 3000);
+      }
+    };
+
+    (window as any).openWindow = function(type: string) {
+      // Hide all windows
+      document.querySelectorAll('.window-container').forEach(win => {
+        (win as HTMLElement).style.display = 'none';
+      });
+      
+      // Show the requested window
+      const windowElement = document.getElementById(`${type}-window`);
+      if (windowElement) {
+        windowElement.style.display = 'block';
+        activeWindow = type;
+        updateTaskbar();
+      }
+    };
+
+    (window as any).focusWindow = function(type: string) {
+      (window as any).openWindow(type);
+    };
+
+    // Context menu
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      const contextMenu = document.getElementById('context-menu');
+      if (contextMenu) {
+        contextMenu.style.display = 'block';
+        contextMenu.style.left = e.pageX + 'px';
+        contextMenu.style.top = e.pageY + 'px';
+      }
+    });
+
+    document.addEventListener('click', function() {
+      const contextMenu = document.getElementById('context-menu');
+      if (contextMenu) {
+        contextMenu.style.display = 'none';
+      }
+    });
+
+    // Desktop icon selection
+    document.addEventListener('click', function(e) {
+      const target = e.target as HTMLElement;
+      if (target && target.closest('.desktop-icon')) {
+        document.querySelectorAll('.desktop-icon').forEach(icon => {
+          icon.classList.remove('selected');
+        });
+        const iconElement = target.closest('.desktop-icon') as HTMLElement;
+        if (iconElement) {
+          iconElement.classList.add('selected');
+        }
+      } else {
+        document.querySelectorAll('.desktop-icon').forEach(icon => {
+          icon.classList.remove('selected');
+        });
+      }
+    });
+
+    // Touch-friendly interactions
+    if ('ontouchstart' in window) {
+      // Add touch event listeners for mobile
+      document.addEventListener('touchstart', function(e) {
+        const target = e.target as HTMLElement;
+        if (target && target.closest('.desktop-icon')) {
+          // Add visual feedback for touch
+          target.closest('.desktop-icon')?.classList.add('selected');
+        }
+      });
+
+      document.addEventListener('touchend', function(e) {
+        const target = e.target as HTMLElement;
+        if (target && target.closest('.desktop-icon')) {
+          // Remove selection after touch
+          setTimeout(() => {
+            target.closest('.desktop-icon')?.classList.remove('selected');
+          }, 200);
+        }
+      });
+    }
+
+    // Make windows draggable (desktop only)
+    if (!isMobile) {
+      document.addEventListener('DOMContentLoaded', function() {
+        const windows = document.querySelectorAll('.retro-windows-gui');
+        
+        windows.forEach((window: Element) => {
+          const header = window.querySelector('.retro-windows-gui-header');
+          if (!header) return;
+          
+          let isDragging = false;
+          let currentX: number = 0;
+          let currentY: number = 0;
+          let initialX: number = 0;
+          let initialY: number = 0;
+          let xOffset: number = 0;
+          let yOffset: number = 0;
+
+          header.addEventListener('mousedown', dragStart as EventListener);
+          document.addEventListener('mousemove', drag as EventListener);
+          document.addEventListener('mouseup', dragEnd as EventListener);
+
+          function dragStart(e: MouseEvent) {
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+            if (e.target === header) {
+              isDragging = true;
+            }
+          }
+
+          function drag(e: MouseEvent) {
+            if (isDragging) {
+              e.preventDefault();
+              currentX = e.clientX - initialX;
+              currentY = e.clientY - initialY;
+              xOffset = currentX;
+              yOffset = currentY;
+              setTranslate(currentX, currentY, window);
+            }
+          }
+
+          function setTranslate(xPos: number, yPos: number, el: Element) {
+            const htmlEl = el as HTMLElement;
+            if (htmlEl && htmlEl.style) {
+              htmlEl.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+            }
+          }
+
+          function dragEnd(e: MouseEvent) {
+            initialX = currentX;
+            initialY = currentY;
+            isDragging = false;
+          }
+        });
+      });
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+      const wasMobile = isMobile;
+      isMobile = window.innerWidth <= 768;
+      
+      // If switching between mobile and desktop
+      if (wasMobile !== isMobile) {
+        // Refresh the page or adjust layout
+        location.reload();
+      }
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      (window as any).openWindow('about');
+      
+      // Add keyboard navigation for accessibility
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          // Close context menu or notifications
+          const contextMenu = document.getElementById('context-menu');
+          if (contextMenu && contextMenu.style.display === 'block') {
+            contextMenu.style.display = 'none';
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
+
