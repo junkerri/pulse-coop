@@ -10,8 +10,15 @@ export default function ThreeJSCubes() {
     let camera, scene, renderer, timer, mesh;
     const mount = mountRef.current;
 
-    const amount = 100;
-    const count = Math.pow(amount, 2);
+    // Responsive cube count based on screen size
+    const getCubeAmount = () => {
+      if (window.innerWidth < 768) return 50; // Mobile: 50x50 = 2,500 cubes
+      if (window.innerWidth < 1024) return 75; // Tablet: 75x75 = 5,625 cubes
+      return 100; // Desktop: 100x100 = 10,000 cubes
+    };
+
+    let amount = getCubeAmount();
+    let count = Math.pow(amount, 2);
     const dummy = new THREE.Object3D();
     const seeds = [];
     const baseColors = [];
@@ -24,15 +31,23 @@ export default function ThreeJSCubes() {
     const cameraTarget = new THREE.Vector3();
 
     function init() {
-      renderer = new THREE.WebGLRenderer({ antialias: true });
-      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer = new THREE.WebGLRenderer({ 
+        antialias: window.innerWidth >= 768, // Only use antialiasing on larger screens
+        powerPreference: "high-performance"
+      });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for mobile
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.toneMapping = THREE.NeutralToneMapping;
       renderer.setAnimationLoop(animate);
       mount.appendChild(renderer.domElement);
 
+      // Responsive camera positioning
+      const isMobile = window.innerWidth < 768;
+      const cameraDistance = isMobile ? 15 : 10;
+      const cameraHeight = isMobile ? 12 : 10;
+      
       camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
-      camera.position.set(10, 10, 10);
+      camera.position.set(cameraDistance, cameraHeight, cameraDistance);
       camera.lookAt(0, 0, 0);
 
       const pmremGenerator = new THREE.PMREMGenerator(renderer);
@@ -103,9 +118,58 @@ export default function ThreeJSCubes() {
     }
 
     function onWindowResize() {
+      // Recalculate cube count for new screen size
+      const newAmount = getCubeAmount();
+      if (newAmount !== amount) {
+        // Recreate scene with new cube count
+        amount = newAmount;
+        count = Math.pow(amount, 2);
+        
+        // Remove old mesh
+        if (mesh) {
+          scene.remove(mesh);
+          mesh.dispose();
+        }
+        
+        // Clear old arrays
+        seeds.length = 0;
+        baseColors.length = 0;
+        
+        // Create new mesh
+        mesh = new THREE.InstancedMesh(geometry, material, count);
+        mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+        scene.add(mesh);
+        
+        // Repopulate with new cube count
+        let i = 0;
+        const offset = (amount - 1) / 2;
+        
+        for (let x = 0; x < amount; x++) {
+          for (let z = 0; z < amount; z++) {
+            dummy.position.set(offset - x, 0, offset - z);
+            dummy.scale.set(1, 2, 1);
+            dummy.updateMatrix();
+
+            color.setHSL(1, 0.5 + (Math.random() * 0.5), 0.5 + (Math.random() * 0.5));
+            baseColors.push(color.getHex());
+
+            mesh.setMatrixAt(i, dummy.matrix);
+            mesh.setColorAt(i, color.multiply(colors[0]));
+            i++;
+            seeds.push(Math.random());
+          }
+        }
+      }
+      
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      
+      // Update camera positioning for new screen size
+      const isMobile = window.innerWidth < 768;
+      const cameraDistance = isMobile ? 15 : 10;
+      const cameraHeight = isMobile ? 12 : 10;
+      camera.position.set(cameraDistance, cameraHeight, cameraDistance);
     }
 
     function animate() {
@@ -113,11 +177,17 @@ export default function ThreeJSCubes() {
       const time = timer.getElapsed();
       TWEEN.update();
 
-      camera.position.x = Math.sin(time / 4) * 10;
-      camera.position.z = Math.cos(time / 4) * 10;
-      camera.position.y = 8 + Math.cos(time / 2) * 2;
+      // Responsive camera animation
+      const isMobile = window.innerWidth < 768;
+      const baseDistance = isMobile ? 15 : 10;
+      const baseHeight = isMobile ? 12 : 10;
+      const animationSpeed = isMobile ? 6 : 4; // Slower animation on mobile for better performance
+      
+      camera.position.x = Math.sin(time / animationSpeed) * baseDistance;
+      camera.position.z = Math.cos(time / animationSpeed) * baseDistance;
+      camera.position.y = baseHeight + Math.cos(time / 2) * 2;
 
-      cameraTarget.x = Math.sin(time / 4) * -8;
+      cameraTarget.x = Math.sin(time / animationSpeed) * -8;
       cameraTarget.z = Math.cos(time / 2) * -8;
       camera.lookAt(cameraTarget);
       camera.up.x = Math.sin(time / 400);
