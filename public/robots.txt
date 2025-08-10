@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://pulse.coop/sitemap.xml
+
+# Crawl-delay (optional, be respectful)
+Crawl-delay: 1

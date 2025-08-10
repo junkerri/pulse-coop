@@ -5,9 +5,19 @@ import ThemeToggle from '../components/ThemeToggle.astro';
 export interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
+  ogType?: string;
 }
 
-const { title, description = "A worker-owned tech cooperative founded by Aastha, Riley, and Andrew" } = Astro.props;
+const { 
+  title, 
+  description = "A worker-owned tech cooperative founded by Aastha, Riley, and Andrew. We support local businesses, build community tools, and use technology to empower grassroots movements.",
+  ogImage = "/favicon.svg",
+  ogType = "website"
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, "https://pulse.coop");
+const siteTitle = "Pulse COOP | Worker-Owned Tech Cooperative";
 ---
 
 <!DOCTYPE html>
@@ -15,18 +25,102 @@ const { title, description = "A worker-owned tech cooperative founded by Aastha,
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" type="image/svg+xml" href="/favicon-simple.svg" sizes="32x32" />
-		<link rel="apple-touch-icon" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		
+		<!-- SEO Meta Tags -->
+		<meta name="keywords" content="worker cooperative, tech coop, Austin tech, worker-owned, democratic workplace, technology cooperative, web development, community tools, grassroots movements" />
+		<meta name="author" content="Pulse COOP" />
+		<meta name="robots" content="index, follow" />
+		<link rel="canonical" href={canonicalURL} />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content={ogType} />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={new URL(ogImage, canonicalURL)} />
+		<meta property="og:site_name" content="Pulse COOP" />
+		<meta property="og:locale" content="en_US" />
+		
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:url" content={canonicalURL} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={new URL(ogImage, canonicalURL)} />
+		
+		<!-- Additional SEO -->
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="msapplication-TileColor" content="#10b981" />
+		
+		<!-- Favicons -->
+		<link rel="icon" type="image/svg+xml" href="/favicon-pulse-grid.svg" />
+		<link rel="icon" type="image/svg+xml" href="/favicon-pulse-static.svg" sizes="32x32" />
+		<link rel="apple-touch-icon" href="/favicon-pulse-static.svg" />
 		<meta name="theme-color" content="#10b981" />
 		<meta name="generator" content={Astro.generator} />
+		
 		<title>{title}</title>
 		
 		<!-- Font imports inspired by forge.coop -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		
+		<!-- JSON-LD Structured Data -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "Organization",
+			"name": "Pulse COOP",
+			"alternateName": "Pulse Cooperative",
+			"url": "https://pulse.coop",
+			"logo": "https://pulse.coop/favicon-pulse-static.svg",
+			"description": "A worker-owned tech cooperative founded by Aastha, Riley, and Andrew. We support local businesses, build community tools, and use technology to empower grassroots movements.",
+			"foundingDate": "2024",
+			"foundingLocation": {
+				"@type": "Place",
+				"name": "Austin, Texas, USA"
+			},
+			"address": {
+				"@type": "PostalAddress",
+				"addressLocality": "Austin",
+				"addressRegion": "TX",
+				"addressCountry": "US"
+			},
+			"contactPoint": {
+				"@type": "ContactPoint",
+				"email": "hello@pulse.coop",
+				"contactType": "General Inquiry"
+			},
+			"founder": [
+				{
+					"@type": "Person",
+					"name": "Aastha Kumari Karki"
+				},
+				{
+					"@type": "Person", 
+					"name": "Andrew Riefenstahl"
+				},
+				{
+					"@type": "Person",
+					"name": "Riley Sklar"
+				}
+			],
+			"memberOf": {
+				"@type": "Organization",
+				"name": "Cooperative Movement"
+			},
+			"knowsAbout": [
+				"Worker Cooperatives",
+				"Web Development", 
+				"Community Technology",
+				"Democratic Workplaces",
+				"Grassroots Technology"
+			],
+			"sameAs": []
+		}
+		</script>
 	</head>
 	<body class="font-inter bg-background text-foreground antialiased">
 		<ThemeToggle />
