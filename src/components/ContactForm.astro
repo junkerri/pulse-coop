@@ -4,7 +4,7 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_FORM_ID || import.meta.env.
 
 <form id="contact-form" class="space-y-4" data-formspree-id={formspreeId || ''}>
   <div id="contact-fields" class="space-y-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="flex flex-col gap-4">
       <div class="flex flex-col gap-2">
         <label for="name" class="text-sm text-muted-foreground">Name</label>
         <input id="name" name="name" required placeholder="Your name" class="h-11 rounded-md border border-input bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]" />
@@ -20,7 +20,7 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_FORM_ID || import.meta.env.
     </div>
 
     <div class="flex items-center gap-3">
-      <button id="contact-submit" type="submit" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all h-10 px-4 border bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]">
+      <button id="contact-submit" type="submit" class="inline-flex items-center w-full justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all h-10 px-4 border bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]">
         <svg class="hidden animate-spin size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle>
           <path class="opacity-75" d="M4 12a8 8 0 018-8" stroke-width="4"></path>

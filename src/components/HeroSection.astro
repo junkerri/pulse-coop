@@ -1,6 +1,7 @@
 ---
-import RubiksCube from './RubiksCube.astro';
+import ThreeJSCubes from './ThreeJSCubes.jsx';
 import PulseWaves from './PulseWaves.astro';
+import RubiksCube from './RubiksCube.astro';
 ---
 
 <!-- Hero Section -->
@@ -14,7 +15,7 @@ import PulseWaves from './PulseWaves.astro';
 			<div class="absolute bottom-32 right-32 w-24 h-24 border border-slate-300 rotate-12"></div>
 		</div>
 	
-	<div class="max-w-7xl mx-auto px-6 relative z-10">
+	<div class="max-w-7xl mx-auto px-6 relative">
 		<div class="grid lg:grid-cols-2 gap-12 items-center">
 			<!-- Content Column -->
 			<div class="text-center lg:text-left">
@@ -63,3 +64,4 @@ import PulseWaves from './PulseWaves.astro';
 		</div>
 	</div>
 </section> 
+<ThreeJSCubes client:load />
