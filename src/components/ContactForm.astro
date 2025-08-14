@@ -1,43 +1,84 @@
 ---
-const formspreeId = import.meta.env.PUBLIC_FORMSPREE_FORM_ID || import.meta.env.NEXT_PUBLIC_FORM;
+const formspreeId =
+  import.meta.env.PUBLIC_FORMSPREE_FORM_ID || import.meta.env.NEXT_PUBLIC_FORM;
 ---
 
-<form id="contact-form" class="space-y-4" data-formspree-id={formspreeId || ''}>
+<form id="contact-form" class="space-y-4" data-formspree-id={formspreeId || ""}>
   <div id="contact-fields" class="space-y-4">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="flex flex-col gap-2">
         <label for="name" class="text-sm text-muted-foreground">Name</label>
-        <input id="name" name="name" required placeholder="Your name" class="h-11 rounded-md border border-input bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]" />
+        <input
+          id="name"
+          name="name"
+          required
+          placeholder="Your name"
+          class="h-11 rounded-md border border-input bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+        />
       </div>
       <div class="flex flex-col gap-2">
         <label for="email" class="text-sm text-muted-foreground">Email</label>
-        <input id="email" name="email" type="email" required placeholder="you@example.com" class="h-11 rounded-md border border-input bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]" />
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          placeholder="you@example.com"
+          class="h-11 rounded-md border border-input bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+        />
       </div>
     </div>
     <div class="flex flex-col gap-2">
       <label for="message" class="text-sm text-muted-foreground">Message</label>
-      <textarea id="message" name="message" rows="5" required placeholder="How can we help?" class="rounded-md border border-input bg-background p-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"></textarea>
+      <textarea
+        id="message"
+        name="message"
+        rows="5"
+        required
+        placeholder="How can we help?"
+        class="rounded-md border border-input bg-background p-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+      ></textarea>
     </div>
 
     <div class="flex items-center gap-3">
-      <button id="contact-submit" type="submit" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all h-10 px-4 border bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]">
-        <svg class="hidden animate-spin size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle>
-          <path class="opacity-75" d="M4 12a8 8 0 018-8" stroke-width="4"></path>
+      <button
+        id="contact-submit"
+        type="submit"
+        class="inline-flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all h-10 px-4 border bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+      >
+        <svg
+          class="hidden animate-spin size-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"
+          ></circle>
+          <path class="opacity-75" d="M4 12a8 8 0 018-8" stroke-width="4"
+          ></path>
         </svg>
         <span>Send</span>
       </button>
     </div>
   </div>
 
-  <div id="contact-success" class="hidden rounded-xl border border-emerald-300/50 dark:border-emerald-600/40 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 px-4 py-6 text-center transition-opacity">
+  <div
+    id="contact-success"
+    class="hidden rounded-xl border border-emerald-300/50 dark:border-emerald-600/40 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 px-4 py-6 text-center transition-opacity"
+  >
     <p class="text-base md:text-lg font-medium">Thanks for your message! 🤝</p>
-    <p class="text-sm text-emerald-600/80 dark:text-emerald-300/80 mt-1">We\'ll get back to you soon.</p>
+    <p class="text-sm text-emerald-600/80 dark:text-emerald-300/80 mt-1">
+      We\'ll get back to you soon.
+    </p>
   </div>
 
-  { !formspreeId && (
-    <p class="text-xs text-destructive mt-2">Missing Formspree ID. Set PUBLIC_FORMSPREE_FORM_ID in your .env.local.</p>
-  )}
+  {
+    !formspreeId && (
+      <p class="text-xs text-destructive mt-2">
+        Missing Formspree ID. Set PUBLIC_FORMSPREE_FORM_ID in your .env.local.
+      </p>
+    )
+  }
 </form>
 
 <script type="module">
@@ -45,38 +86,38 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_FORM_ID || import.meta.env.
   let confettiFn = null;
   async function loadConfetti() {
     if (confettiFn) return confettiFn;
-    const mod = await import('https://esm.sh/canvas-confetti@1');
+    const mod = await import("https://esm.sh/canvas-confetti@1");
     confettiFn = mod.default || mod;
     return confettiFn;
   }
 
-  const form = document.getElementById('contact-form');
-  const fields = document.getElementById('contact-fields');
-  const successPanel = document.getElementById('contact-success');
-  const submitBtn = document.getElementById('contact-submit');
-  const spinner = submitBtn?.querySelector('svg');
-  const submitText = submitBtn?.querySelector('span');
+  const form = document.getElementById("contact-form");
+  const fields = document.getElementById("contact-fields");
+  const successPanel = document.getElementById("contact-success");
+  const submitBtn = document.getElementById("contact-submit");
+  const spinner = submitBtn?.querySelector("svg");
+  const submitText = submitBtn?.querySelector("span");
 
   let resetTimer;
 
   function setSubmitting(isSubmitting) {
     if (!submitBtn || !spinner || !submitText) return;
     submitBtn.disabled = isSubmitting;
-    spinner.classList.toggle('hidden', !isSubmitting);
-    submitText.textContent = isSubmitting ? 'Sending...' : 'Send';
+    spinner.classList.toggle("hidden", !isSubmitting);
+    submitText.textContent = isSubmitting ? "Sending..." : "Send";
   }
 
   function showSuccessTransient() {
     if (!fields || !successPanel) return;
-    fields.classList.add('hidden');
-    successPanel.classList.remove('hidden');
+    fields.classList.add("hidden");
+    successPanel.classList.remove("hidden");
     clearTimeout(resetTimer);
     resetTimer = setTimeout(() => {
-      successPanel.classList.add('opacity-0');
+      successPanel.classList.add("opacity-0");
       setTimeout(() => {
-        successPanel.classList.add('hidden');
-        successPanel.classList.remove('opacity-0');
-        fields.classList.remove('hidden');
+        successPanel.classList.add("hidden");
+        successPanel.classList.remove("opacity-0");
+        fields.classList.remove("hidden");
       }, 200);
     }, 3000);
   }
@@ -84,71 +125,93 @@ const formspreeId = import.meta.env.PUBLIC_FORMSPREE_FORM_ID || import.meta.env.
   async function fireConfetti() {
     const confetti = await loadConfetti();
     const end = Date.now() + 600;
-    const colors = ['#10b981','#3b82f6','#ef4444','#f59e0b','#22c55e'];
+    const colors = ["#10b981", "#3b82f6", "#ef4444", "#f59e0b", "#22c55e"];
     (function frame() {
-      confetti({ particleCount: 40, spread: 60, startVelocity: 35, ticks: 90, scalar: 0.9, origin: { y: 0.25 }, colors });
+      confetti({
+        particleCount: 40,
+        spread: 60,
+        startVelocity: 35,
+        ticks: 90,
+        scalar: 0.9,
+        origin: { y: 0.25 },
+        colors,
+      });
       if (Date.now() < end) requestAnimationFrame(frame);
     })();
   }
 
   async function submitToFormspreeInline(formId, data) {
     if (!formId) {
-      return { ok: false, status: 500, error: 'Missing Formspree form id.' };
+      return { ok: false, status: 500, error: "Missing Formspree form id." };
     }
     try {
       const formData = new FormData();
-      formData.append('name', data.name);
-      formData.append('email', data.email);
-      formData.append('message', data.message);
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("message", data.message);
 
       const res = await fetch(`https://formspree.io/f/${formId}`, {
-        method: 'POST',
+        method: "POST",
         body: formData,
-        headers: { 'Accept': 'application/json' },
+        headers: { Accept: "application/json" },
       });
       const body = await res.json().catch(() => undefined);
       if (!res.ok) {
-        let errorMsg = 'Submission failed';
+        let errorMsg = "Submission failed";
         const errors = body?.errors;
         if (Array.isArray(errors) && errors.length) {
-          errorMsg = errors.map(e => e.message).filter(Boolean).join('\n') || errorMsg;
+          errorMsg =
+            errors
+              .map((e) => e.message)
+              .filter(Boolean)
+              .join("\n") || errorMsg;
         }
         return { ok: false, status: res.status, error: errorMsg, body };
       }
       return { ok: true, status: res.status, body };
     } catch (err) {
-      return { ok: false, status: 0, error: 'Network error' };
+      return { ok: false, status: 0, error: "Network error" };
     }
   }
 
   if (form) {
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+    form.addEventListener(
+      "submit",
+      async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
 
-      const name = /** @type {HTMLInputElement|null} */(document.getElementById('name'));
-      const email = /** @type {HTMLInputElement|null} */(document.getElementById('email'));
-      const message = /** @type {HTMLTextAreaElement|null} */(document.getElementById('message'));
-      const formId = form.getAttribute('data-formspree-id');
-      if (!name || !email || !message) return false;
+        const name = /** @type {HTMLInputElement|null} */ (
+          document.getElementById("name")
+        );
+        const email = /** @type {HTMLInputElement|null} */ (
+          document.getElementById("email")
+        );
+        const message = /** @type {HTMLTextAreaElement|null} */ (
+          document.getElementById("message")
+        );
+        const formId = form.getAttribute("data-formspree-id");
+        if (!name || !email || !message) return false;
 
-      setSubmitting(true);
-      const res = await submitToFormspreeInline(formId, {
-        name: name.value.trim(),
-        email: email.value.trim(),
-        message: message.value.trim(),
-      });
-      setSubmitting(false);
+        setSubmitting(true);
+        const res = await submitToFormspreeInline(formId, {
+          name: name.value.trim(),
+          email: email.value.trim(),
+          message: message.value.trim(),
+        });
+        setSubmitting(false);
 
-      if (res.ok) {
-        await fireConfetti();
-        form.reset();
-        showSuccessTransient();
-      } else {
-        alert(res.error || 'Something went wrong. Please try again later.');
-      }
+        if (res.ok) {
+          await fireConfetti();
+          form.reset();
+          showSuccessTransient();
+        } else {
+          alert(res.error || "Something went wrong. Please try again later.");
+        }
 
-      return false;
-    }, { passive: false });
+        return false;
+      },
+      { passive: false }
+    );
   }
 </script>
