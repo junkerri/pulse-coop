@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <!-- Gradients for pulse grid -->
+    <linearGradient id="cellGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa"/>
+      <stop offset="100%" style="stop-color:#10b981"/>
+    </linearGradient>
+    <linearGradient id="centerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ef4444"/>
+      <stop offset="100%" style="stop-color:#f97316"/>
+    </linearGradient>
+    
+    <!-- Glow filter -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="32" height="32" fill="#1e293b" rx="4"/>
+  
+  <!-- 3x3 Pulse Grid -->
+  <g transform="translate(4, 4)">
+    <!-- Row 1 -->
+    <rect x="0" y="0" width="6" height="6" fill="url(#cellGrad)" rx="1" opacity="0.8"/>
+    <rect x="9" y="0" width="6" height="6" fill="url(#cellGrad)" rx="1" opacity="0.6"/>
+    <rect x="18" y="0" width="6" height="6" fill="url(#cellGrad)" rx="1" opacity="0.4"/>
+    
+    <!-- Row 2 -->
+    <rect x="0" y="9" width="6" height="6" fill="url(#cellGrad)" rx="1" opacity="0.6"/>
+    
+    <!-- Center Cell (Heart) - Always bright -->
+    <circle cx="12" cy="12" r="3" fill="url(#centerGrad)" filter="url(#glow)" opacity="1"/>
+    
+    <rect x="18" y="9" width="6" height="6" fill="url(#cellGrad)" rx="1" opacity="0.4"/>
+    
+    <!-- Row 3 -->
+    <rect x="0" y="18" width="6" height="6" fill="url(#cellGrad)" rx="1" opacity="0.4"/>
+    <rect x="9" y="18" width="6" height="6" fill="url(#cellGrad)" rx="1" opacity="0.6"/>
+    <rect x="18" y="18" width="6" height="6" fill="url(#cellGrad)" rx="1" opacity="0.8"/>
+  </g>
+  
+  <!-- Floating accent dots -->
+  <circle cx="6" cy="6" r="1" fill="#a855f7" opacity="0.7"/>
+  <circle cx="26" cy="26" r="1" fill="#22c55e" opacity="0.7"/>
+</svg>

@@ -744,7 +744,6 @@ import RetroWindowsGUI from '../layouts/RetroWindowsGUI.astro';
     };
 
     let activeWindow = 'about';
-    let windowStates = {};
     let isMobile = window.innerWidth <= 768;
 
     // Update clock
@@ -916,7 +915,7 @@ import RetroWindowsGUI from '../layouts/RetroWindowsGUI.astro';
             }
           }
 
-          function dragEnd(e: MouseEvent) {
+          function dragEnd() {
             initialX = currentX;
             initialY = currentY;
             isDragging = false;

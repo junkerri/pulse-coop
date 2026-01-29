@@ -5,8 +5,86 @@ import AboutSection from '../components/AboutSection.astro';
 import ContactSection from '../components/ContactSection.astro';
 ---
 
-<MainLayout title="Pulse COOP | Worker-Owned Tech Cooperative">
+<MainLayout
+	title="Pulse COOP | Worker-Owned Tech Cooperative in Austin, Texas"
+	description="Austin-based worker-owned tech cooperative founded by Aastha, Riley, and Andrew. We support local businesses, build community tools, and use technology to empower small organizations and grassroots movements."
+>
+	<!-- General Strike Modal Overlay -->
+	<div id="gs-overlay" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+		<!-- Glassmorphism backdrop -->
+		<div class="absolute inset-0 bg-black/60 backdrop-blur-md"></div>
+
+		<!-- Modal content -->
+		<div class="relative z-10 max-w-lg w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-12 shadow-2xl transform transition-all duration-500 scale-100">
+			<!-- Close button -->
+			<button id="gs-close" class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/20 transition-colors text-white/80 hover:text-white">
+				<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+				</svg>
+			</button>
+
+			<!-- SVG Image -->
+			<div class="flex justify-center mb-6 shadow-lg">
+				<img src="/gs.svg" alt="General Strike" class="w-100 h-auto drop-shadow-2xl" />
+			</div>
+
+			<!-- Title -->
+			<!-- <h2 class="text-4xl md:text-5xl font-bold text-center text-white mb-4 tracking-tight">
+				General Strike
+			</h2> -->
+
+			<!-- Subtitle/Description -->
+			<h2 class="text-center text-white/70 text-2xl mb-6 uppercase font-semibold tracking-wide">
+				Workers united for change
+			</h2>
+
+			<!-- CTA Button -->
+			<div class="flex justify-center">
+				<button id="gs-enter" class="px-8 py-3 bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
+					Enter Site
+				</button>
+			</div>
+		</div>
+	</div>
+
 	<HeroSection />
 	<AboutSection />
 	<ContactSection />
 </MainLayout>
+
+<script>
+	const overlay = document.getElementById('gs-overlay');
+	const closeBtn = document.getElementById('gs-close');
+	const enterBtn = document.getElementById('gs-enter');
+
+	function closeModal() {
+		if (overlay) {
+			overlay.style.opacity = '0';
+			overlay.style.pointerEvents = 'none';
+			setTimeout(() => {
+				overlay.style.display = 'none';
+			}, 300);
+		}
+	}
+
+	closeBtn?.addEventListener('click', closeModal);
+	enterBtn?.addEventListener('click', closeModal);
+
+	// Close on escape key
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape') closeModal();
+	});
+
+	// Close when clicking backdrop
+	overlay?.addEventListener('click', (e) => {
+		if (e.target === overlay || e.target === overlay.querySelector('.absolute.inset-0')) {
+			closeModal();
+		}
+	});
+</script>
+
+<style>
+	#gs-overlay {
+		transition: opacity 0.3s ease-out;
+	}
+</style>
